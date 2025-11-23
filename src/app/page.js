@@ -1,65 +1,55 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { adminService } from '@/api/adminService';
+import { authService, AuthService } from '@/api/authService';
+import styles from './Home.module.css'; //импорт стилей
 
-export default function Home() {
+export default function HomePage() {
+  const router = useRouter();
+  const [admin, setAdmin] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!adminService.currentAdmin && !adminService.token) {
+      router.push('/auth');
+    } else {
+      setAdmin(adminService.currentAdmin);
+      setLoading(false);
+    }
+  }, [router]);
+
+  const handleLogout = () => {
+    adminService.logout();//очищаем данные пользователя и apikey
+    router.push('/auth');
+  };
+
+  if (loading) {
+    return <div className={styles.loading}>Загрузка...</div>;
+  }
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.js file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className={styles.container}>
+      <header className={styles.header}>
+        <h1 className={styles.title}>Главная страница</h1>
+        <div className={styles.userInfo}>
+          <span>Привет, {admin?.name}!</span>
+          <button 
+            onClick={handleLogout}
+            className={styles.logoutButton}
           >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            Выйти
+          </button>
         </div>
+      </header>
+      
+      <main className={styles.content}>
+        <h2 className={styles.contentTitle}>Панель администратора</h2>
+        <p className={styles.contentText}>
+          Добро пожаловать в систему управления магазином! Здесь вы можете управлять товарами, 
+          заказами, категориями и другими настройками магазина.
+        </p>
+        {/* Здесь потом добавим меню для управления */}
       </main>
     </div>
   );

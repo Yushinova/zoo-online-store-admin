@@ -1,0 +1,16 @@
+export class ProductImageResponse {
+  constructor() {
+    this.id = 0;
+    this.imageName = '';
+    this.altText = '';
+    this.productId = 0;
+  }
+}
+/////
+export class ProductImageRequest {
+  constructor() {
+    this.imageName = '';
+    this.altText = '';
+    this.productId = 0;
+  }
+}
