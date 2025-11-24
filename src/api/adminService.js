@@ -6,11 +6,9 @@ export class AdminService {
     this.currentAdmin = null;
   }
 
-  // setApiKey(apiKey) {
-  //   this.apiKey = apiKey;
-  //   localStorage.setItem('adminApiKey', apiKey);
-  //   document.cookie = `adminApiKey=${apiKey}; path=/; max-age=86400`;
-  // }
+  setApiKey(apiKey) {
+    this.apiKey = apiKey;
+  }
 
   setCurrentAdmin(admin) {
     this.currentAdmin = admin;
@@ -36,15 +34,10 @@ export class AdminService {
         throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
       }
 
-      const adminResponseData = await response.json();
-      const adminResponse = new AdminResponse();
-      Object.assign(adminResponse, adminResponseData);
-      
-      // Сохраняем apiKey и данные админа
-     // this.setApiKey(adminResponse.apiKey);
-      this.setCurrentAdmin(adminResponse);
-      
-      return adminResponse;
+      const apiKey = await response.text();
+      this.apiKey = apiKey;
+    
+      return apiKey;
     } catch (error) {
       console.error('Error registering admin:', error);
       throw error;
@@ -70,21 +63,47 @@ export class AdminService {
         throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
       }
 
-      const adminResponseData = await response.json();
-      const adminResponse = new AdminResponse();
-      Object.assign(adminResponse, adminResponseData);
+      const apiKey = await response.text();
+      this.setApiKey(apiKey);
       
-      // Сохраняем apiKey и данные админа
-      //this.setApiKey(adminResponse.apiKey);
-      this.setCurrentAdmin(adminResponse);
-      
-      return adminResponse;
+      return apiKey;
     } catch (error) {
       console.error('Error logging in admin:', error);
       throw error;
     }
   }
 
+  async getAdmin(apiKey){
+     try {
+      const response = await fetch(
+        `${API_CONFIG.BASE_URL}${'/api/admin'}`,
+        {
+          method: 'GET',
+          headers: {
+          'X-API-Key': apiKey,
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+      }
+
+      const adminResponseData = await response.json();
+      const adminResponse = new AdminResponse();
+      Object.assign(adminResponse, adminResponseData);
+      
+      this.setCurrentAdmin(adminResponse);
+      
+      return adminResponse;
+    } catch (error) {
+      console.error('Failed to fetch admin:', error);
+      throw error;
+    }
+  }
   //восстановление из localStorage
   loadFromStorage() {
     if (typeof window !== 'undefined') {
@@ -112,11 +131,9 @@ export class AdminService {
     // 2. Очищаем фронтенд в любом случае
     this.apiKey = null;
     this.currentAdmin = null;
-    localStorage.removeItem('adminApiKey');
     localStorage.removeItem('adminData');
     
     // 3. Удаляем cookies на фронтенде (на всякий случай)
-    document.cookie = 'adminApiKey=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
     document.cookie = 'adminToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
   }
   

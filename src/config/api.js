@@ -4,7 +4,8 @@ export const API_CONFIG = {
   ADMIN: {
     LOGIN: '/api/admin/login',
     REGISTER: '/api/admin/register',
-    AUTH: '/api/auth/admin'
+    AUTH: '/api/auth/admin',
+    GET: `/api/admin`
   },
   
   ORDERS: {

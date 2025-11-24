@@ -16,8 +16,6 @@ export class AdminLoginRequest {
 export class AdminResponse {
   constructor() {
     this.name = '';
-    this.login = '';
-    this.role = '';
-    this.apiKey = '';
+    this.login = ''
   }
 }

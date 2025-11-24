@@ -38,11 +38,13 @@ export default function AuthForm() {
         loginData.login = formData.login;
         loginData.password = formData.password;
         //получаем данные админа из бд после входа с apiKey
-        const adminResponse = await adminService.login(loginData);
-       // console.log(adminResponse);
+        const apiKey = await adminService.login(loginData);
+        console.log("apikey: " + apiKey);
         //получаем токен по ключу
-        const token = await authService.getTokenByApiKey(adminResponse.apiKey);
-        console.log(token);
+        const token = await authService.getTokenByApiKey(apiKey);
+        console.log("token: " + token);
+        //получаем данные админа
+        const adminResponse = await adminService.getAdmin(apiKey);
         setMessage(`Успешный вход! Добро пожаловать, ${adminResponse.name}`);
 
         //РЕДИРЕКТ НА ГЛАВНУЮ ЧЕРЕЗ 1.5 СЕКУНДЫ
@@ -59,10 +61,11 @@ export default function AuthForm() {
         //роль по умолчанию "reader" установится на бэкенде автоматически для всех новых
          
         //получаем админа после регитрации с apiKey
-        const result = await adminService.register(adminData);
+        const apiKey = await adminService.register(adminData);
          //получаем токен по ключу
-        const token = await authService.getTokenByApiKey(result.apiKey);
-        setMessage(`Админ ${result.name} успешно зарегистрирован!`);
+        const token = await authService.getTokenByApiKey(apiKey);
+        const response = await adminService.getAdmin(apiKey);
+        setMessage(`Админ ${response.name} успешно зарегистрирован!`);
         setFormData({ name: '', login: '', password: '' });//очищаем
         // РЕДИРЕКТ НА ГЛАВНУЮ ЧЕРЕЗ 1.5 СЕКУНДЫ
         setTimeout(() => {

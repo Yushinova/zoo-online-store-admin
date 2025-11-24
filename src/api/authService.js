@@ -12,6 +12,10 @@ export class AuthService {
 
   async getTokenByApiKey(apiKey) {
     try {
+
+       const requestBody = {
+        apiKey: apiKey
+      };
       const response = await fetch(
       `${API_CONFIG.BASE_URL}${API_CONFIG.ADMIN.AUTH}`,
       {
@@ -20,7 +24,7 @@ export class AuthService {
           'Content-Type': 'application/json',
         },
         credentials: 'include',
-        body: JSON.stringify(apiKey) // ⚡ Просто строку
+        body: JSON.stringify(requestBody)
       }
     );
 

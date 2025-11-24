@@ -2,8 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { adminService } from '@/api/adminService';
-import { authService, AuthService } from '@/api/authService';
-import styles from './Home.module.css'; //импорт стилей
+import styles from './Home.module.css';
 
 export default function HomePage() {
   const router = useRouter();
@@ -20,8 +19,16 @@ export default function HomePage() {
   }, [router]);
 
   const handleLogout = () => {
-    adminService.logout();//очищаем данные пользователя и apikey
+    adminService.logout();
     router.push('/auth');
+  };
+
+  const navigateToOrders = () => {
+    router.push('/orders');
+  };
+
+  const navigateToShop = () => {
+    router.push('/shop');
   };
 
   if (loading) {
@@ -49,7 +56,22 @@ export default function HomePage() {
           Добро пожаловать в систему управления магазином! Здесь вы можете управлять товарами, 
           заказами, категориями и другими настройками магазина.
         </p>
-        {/* Здесь потом добавим меню для управления */}
+        
+        {/* ⚡ ДОБАВЛЯЕМ КНОПКИ ДЛЯ НАВИГАЦИИ */}
+        <div className={styles.navigation}>
+          <button 
+            onClick={navigateToOrders}
+            className={styles.navButton}
+          >
+            📦 Заказы
+          </button>
+          <button 
+            onClick={navigateToShop}
+            className={styles.navButton}
+          >
+            🏪 Магазин
+          </button>
+        </div>
       </main>
     </div>
   );
