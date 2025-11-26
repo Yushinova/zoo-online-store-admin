@@ -30,6 +30,7 @@ export const API_CONFIG = {
       
       return `/api/products?${queryString.toString()}`;
     },
+
   },
   
   CATEGORIES: {
