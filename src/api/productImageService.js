@@ -1,47 +1,138 @@
-import { API_CONFIG } from '@/config/api';//не работает
+import { API_CONFIG } from '@/config/api';
+
+export class ProductImageRequest {
+  constructor() {
+    this.imageName = '';
+    this.altText = '';
+    this.productId = 0;
+  }
+}
 
 export class ProductImageService {
-  // Добавление информации об изображении в БД
-  static async addImageToProduct(imageData) {
+  constructor() {
+    this.baseUrl = `${API_CONFIG.BASE_URL}/api/image`;
+  }
+
+  async insert(productImageRequest) {
     try {
-      const response = await fetch(`${API_CONFIG.BASE_URL}/api/image`, {
+      console.log('Sending insert request:', productImageRequest);
+      
+      const response = await fetch(this.baseUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         credentials: 'include',
-        body: JSON.stringify(imageData),
+        body: JSON.stringify(productImageRequest)
+      });
+
+      console.log('Response status:', response.status);
+
+      if (!response.ok) {
+        // Для ошибок пробуем получить текст или JSON
+        const errorText = await response.text();
+        console.log('Error response:', errorText);
+        
+        let errorMessage = `HTTP error! status: ${response.status}`;
+        if (errorText) {
+          try {
+            const errorData = JSON.parse(errorText);
+            errorMessage = errorData.Message || errorData.message || errorMessage;
+          } catch {
+            errorMessage = errorText || errorMessage;
+          }
+        }
+        
+        throw new Error(errorMessage);
+      }
+
+      // Для успешного Ok() без контента - просто проверяем статус
+      console.log('Insert successful - empty response');
+      return { success: true, message: 'Image added successfully' };
+
+    } catch (error) {
+      console.error('Error inserting product image:', error);
+      throw error;
+    }
+  }
+
+  // Удаление изображения по имени
+  async deleteByName(name) {
+    try {
+      console.log('Deleting image with name:', name);
+      
+      const response = await fetch(`${this.baseUrl}?name=${encodeURIComponent(name)}`, {
+        method: 'DELETE',
+        credentials: 'include'
+      });
+
+      console.log('Delete response status:', response.status);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.log('Delete error response:', errorText);
+        
+        let errorMessage = `HTTP error! status: ${response.status}`;
+        if (errorText) {
+          try {
+            const errorData = JSON.parse(errorText);
+            errorMessage = errorData.Message || errorData.message || errorMessage;
+          } catch {
+            errorMessage = errorText || errorMessage;
+          }
+        }
+        
+        throw new Error(errorMessage);
+      }
+
+      // Для успешного Ok() без контента
+      console.log('Delete successful - empty response');
+      return { success: true, message: 'Image deleted successfully' };
+
+    } catch (error) {
+      console.error('Error deleting product image:', error);
+      throw error;
+    }
+  }
+
+  // Получение всех изображений (если нужно)
+  async getAll() {
+    try {
+      const response = await fetch(this.baseUrl, {
+        method: 'GET',
+        credentials: 'include'
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.Message || `Failed to add image: ${response.status}`);
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       return await response.json();
     } catch (error) {
-      console.error('Error adding image to database:', error);
+      console.error('Error getting product images:', error);
       throw error;
     }
   }
 
-  // Удаление изображения из БД
-  static async deleteProductImage(imageId) {
+  // Получение изображения по ID (если нужно)
+  async getById(id) {
     try {
-      const response = await fetch(`${API_CONFIG.BASE_URL}/api/image/${imageId}`, {
-        method: 'DELETE',
-        credentials: 'include',
+      const response = await fetch(`${this.baseUrl}/${id}`, {
+        method: 'GET',
+        credentials: 'include'
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.Message || `Failed to delete image: ${response.status}`);
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      return true;
+      return await response.json();
     } catch (error) {
-      console.error('Error deleting image from database:', error);
+      console.error('Error getting product image by id:', error);
       throw error;
     }
   }
 }
+
+// Создаем экземпляр сервиса
+export const productImageService = new ProductImageService();

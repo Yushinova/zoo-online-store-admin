@@ -1,14 +1,8 @@
-import { API_CONFIG } from '@/config/api'; // Добавь этот импорт
+import { API_CONFIG } from '@/config/api';
 export class AuthService {
   constructor() {
     this.token = null;
   }
-
-  // setToken(token) {
-  //   this.token = token;
-  //   localStorage.setItem('adminToken', token);
-  //   document.cookie = `adminToken=${token}; path=/; max-age=86400`; // 24 часа
-  // }
 
   async getTokenByApiKey(apiKey) {
     try {
@@ -34,7 +28,7 @@ export class AuthService {
       }
 
       const token = await response.text();
-      //this.setToken(token);
+      this.token = token;
       return token;
     } catch (error) {
       console.error('Error getting token by API key:', error);
