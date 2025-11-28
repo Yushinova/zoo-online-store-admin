@@ -4,11 +4,18 @@ export class PetTypeRequest {
     this.imageName = '';
   }
 }
-
+export class PetTypeUpdateRequest{
+  constructor(){
+    this.id=0;
+    this.name='';
+    this.categoriesIds=[];
+  }
+}
 export class PetTypeResponse{
   constructor() {
     this.id = 0;
     this.name = '';
+    this.imageName = '';
     this.categories = []; 
   }
 }

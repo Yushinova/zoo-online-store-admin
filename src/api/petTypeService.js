@@ -96,14 +96,50 @@ async insert(petTypeRequest) {
         throw new Error(errorMessage);
       }
 
-      // Для успешного Ok() без контента - просто проверяем статус
-      console.log('Insert successful - empty response');
-      return { success: true, message: 'pet type added successfully' };
+      const createdPetType = await response.json();
+      console.log('Insert successful, created pet type:', createdPetType);
+      return createdPetType;
 
     } catch (error) {
       console.error('Error creating pet type', error);
       throw error;
     }
+  }
+
+  async updateWithCategories(petTypeUpdateRequest){
+     try{
+        const response = await fetch(this.baseUrl, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(petTypeUpdateRequest)
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        let errorMessage = `HTTP error! status: ${response.status}`;
+        
+        try {
+          const errorData = JSON.parse(errorText);
+          errorMessage = errorData.Message || errorData.message || errorMessage;
+        } catch {
+          errorMessage = errorText || errorMessage;
+        }
+        
+        throw new Error(errorMessage);
+      }
+
+      const updatedPetType = await response.json();
+      console.log('PetType updated successfully:', updatedPetType);
+      return updatedPetType;
+
+     }
+     catch(error){
+        console.error('Error updating petType:', error);
+      throw error;
+     }
   }
 
  async deleteById(id) {
