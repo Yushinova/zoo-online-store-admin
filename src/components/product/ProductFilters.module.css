@@ -1,0 +1,271 @@
+.container {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+.resetButton,
+.applyButton {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.resetButton {
+  background: #6c757d;
+  color: white;
+}
+
+.resetButton:hover {
+  background: #545b62;
+}
+
+.applyButton {
+  background: #007bff;
+  color: white;
+}
+
+.applyButton:hover {
+  background: #0056b3;
+}
+
+/* Верхняя строка - основные фильтры */
+.topRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* Нижняя строка - дополнительные фильтры */
+.bottomRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.input,
+.select {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+
+.input:focus,
+.select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* Ценовой диапазон */
+.priceRange {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.priceInput {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.priceInput:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.priceSeparator {
+  color: #666;
+  font-weight: 500;
+}
+
+/* Чекбоксы */
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.checkboxText {
+  font-size: 14px;
+  color: #333;
+}
+
+/* Загрузка */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 40px;
+  color: #666;
+  font-size: 16px;
+}
+
+.loadingSpinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Мобильные действия (скрыты на десктопе) */
+.mobileActions {
+  display: none;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.mobileResetButton,
+.mobileApplyButton {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.mobileResetButton {
+  background: #6c757d;
+  color: white;
+}
+
+.mobileApplyButton {
+  background: #007bff;
+  color: white;
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+  .topRow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .bottomRow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+  
+  .title {
+    text-align: center;
+  }
+  
+  .actions {
+    display: none;
+  }
+  
+  .mobileActions {
+    display: flex;
+  }
+  
+  .topRow {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .bottomRow {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .priceRange {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .priceSeparator {
+    transform: rotate(90deg);
+  }
+}
+
+@media (max-width: 480px) {
+  .checkboxGroup {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}

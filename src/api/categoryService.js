@@ -65,9 +65,9 @@ export class CategoryService{
         throw new Error(errorMessage);
       }
 
-      // Для успешного Ok() без контента - просто проверяем статус
-      console.log('Insert successful - empty response');
-      return { success: true, message: 'category added successfully' };
+      const createdCategory = await response.json();
+      console.log('Insert successful, created category:', createdCategory);
+      return createdCategory;
 
     } catch (error) {
       console.error('Error creating ctegory', error);

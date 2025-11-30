@@ -1,19 +1,20 @@
 .container {
   min-height: 100vh;
-  padding: 20px;
-  background-color: #f5f5f5;
+  background: #f5f5f5;
 }
 
 .header {
+  background: white;
+  padding: 20px 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
-  padding-bottom: 20px;
-  border-bottom: 2px solid #e0e0e0;
 }
 
 .title {
+  font-size: 28px;
+  font-weight: 600;
   color: #333;
   margin: 0;
 }
@@ -21,39 +22,159 @@
 .userInfo {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 20px;
+}
+
+.adminName {
+  font-size: 16px;
+  color: #666;
+  font-weight: 500;
+}
+
+.headerButtons {
+  display: flex;
+  gap: 12px;
+}
+
+.backButton,
+.logoutButton {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
 .backButton {
-  padding: 8px 16px;
-  background-color: #6c757d;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  background: #f8f9fa;
+  color: #495057;
+  border: 1px solid #dee2e6;
 }
 
 .backButton:hover {
-  background-color: #5a6268;
+  background: #e9ecef;
 }
 
-.content {
+.logoutButton {
+  background: #dc3545;
+  color: white;
+}
+
+.logoutButton:hover {
+  background: #c82333;
+}
+
+/* Навигация */
+.navigation {
   background: white;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 0 30px;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  gap: 8px;
 }
 
-.placeholder {
-  text-align: center;
-  padding: 40px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  margin-top: 20px;
+.navButton {
+  padding: 16px 24px;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-size: 16px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.navButton:hover {
+  color: #007bff;
+  background: #f8f9fa;
+}
+
+.navButton.active {
+  color: #007bff;
+  border-bottom-color: #007bff;
+  background: #f0f8ff;
+}
+
+/* Основной контент */
+.content {
+  padding: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .loading {
-  text-align: center;
-  padding: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   font-size: 18px;
+  color: #666;
+}
+
+.placeholder {
+  background: white;
+  padding: 60px 40px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.placeholder p {
+  font-size: 20px;
+  color: #666;
+  margin: 0;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .header {
+    padding: 16px 20px;
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 24px;
+  }
+  
+  .userInfo {
+    justify-content: space-between;
+  }
+  
+  .adminName {
+    font-size: 14px;
+  }
+  
+  .navigation {
+    padding: 0 20px;
+    overflow-x: auto;
+  }
+  
+  .navButton {
+    padding: 12px 16px;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  
+  .content {
+    padding: 20px 16px;
+  }
+  
+  .headerButtons {
+    gap: 8px;
+  }
+  
+  .backButton,
+  .logoutButton {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
 }

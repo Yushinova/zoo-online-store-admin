@@ -2,12 +2,15 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { adminService } from '@/api/adminService';
+import PetTypeManager from '@/components/petType/PetTypeManager'; // Импортируем наш компонент
+import CategoryManager from '@/components/category/CategoryManager';
 import styles from './Shop.module.css';
 
 export default function ShopPage() {
   const router = useRouter();
   const [admin, setAdmin] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [activeSection, setActiveSection] = useState('petTypes'); // 'petTypes' | 'products' | 'categories'
 
   useEffect(() => {
     if (!adminService.currentAdmin && !adminService.token) {
@@ -22,30 +25,75 @@ export default function ShopPage() {
     router.push('/');
   };
 
+  const handleLogout = () => {
+    adminService.logout();
+    router.push('/auth');
+  };
+
   if (loading) {
     return <div className={styles.loading}>Загрузка...</div>;
   }
+
+  // Рендер контента в зависимости от активной секции
+  const renderContent = () => {
+  switch (activeSection) {
+    case 'petTypes':
+      return <PetTypeManager />;
+    case 'products':
+      return (
+        <div className={styles.placeholder}>
+          <p>🛍️ Управление товарами в разработке</p>
+        </div>
+      );
+    case 'categories':
+      return <CategoryManager />;
+    default:
+      return <PetTypeManager />;
+  }
+};
 
   return (
     <div className={styles.container}>
       <header className={styles.header}>
         <h1 className={styles.title}>Управление магазином</h1>
         <div className={styles.userInfo}>
-          <span>Админ: {admin?.name}</span>
-          <button onClick={handleBack} className={styles.backButton}>
-            Назад
-          </button>
+          <span className={styles.adminName}>Админ: {admin?.name}</span>
+          <div className={styles.headerButtons}>
+            <button onClick={handleBack} className={styles.backButton}>
+              На главную
+            </button>
+            <button onClick={handleLogout} className={styles.logoutButton}>
+              Выйти
+            </button>
+          </div>
         </div>
       </header>
       
+      {/* Навигация по разделам */}
+      <nav className={styles.navigation}>
+        <button 
+          className={`${styles.navButton} ${activeSection === 'petTypes' ? styles.active : ''}`}
+          onClick={() => setActiveSection('petTypes')}
+        >
+          🐾 Типы животных
+        </button>
+          <button 
+          className={`${styles.navButton} ${activeSection === 'categories' ? styles.active : ''}`}
+          onClick={() => setActiveSection('categories')}
+        >
+          📂 Категории
+        </button>
+        <button 
+          className={`${styles.navButton} ${activeSection === 'products' ? styles.active : ''}`}
+          onClick={() => setActiveSection('products')}
+        >
+          🛍️ Товары
+        </button>
+      
+      </nav>
+      
       <main className={styles.content}>
-        <h2>Товары и категории</h2>
-        <p>Здесь вы можете управлять товарами, категориями и настройками магазина.</p>
-        
-        {/* Заглушка для будущего контента */}
-        <div className={styles.placeholder}>
-          <p>🏪 Функционал управления магазином в разработке</p>
-        </div>
+        {renderContent()}
       </main>
     </div>
   );
