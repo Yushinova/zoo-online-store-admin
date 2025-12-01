@@ -5,6 +5,7 @@ import { adminService } from '@/api/adminService';
 import PetTypeManager from '@/components/petType/PetTypeManager'; // Импортируем наш компонент
 import CategoryManager from '@/components/category/CategoryManager';
 import styles from './Shop.module.css';
+import ProductsManager from '@/components/product/ProductsManager';
 
 export default function ShopPage() {
   const router = useRouter();
@@ -40,11 +41,7 @@ export default function ShopPage() {
     case 'petTypes':
       return <PetTypeManager />;
     case 'products':
-      return (
-        <div className={styles.placeholder}>
-          <p>🛍️ Управление товарами в разработке</p>
-        </div>
-      );
+      return <ProductsManager />;
     case 'categories':
       return <CategoryManager />;
     default:
