@@ -5,7 +5,9 @@ import { ProductQueryParameters } from "@/models/product";
 import ProductCard from '@/components/product/ProductCard';
 import ProductFilters from '@/components/product/ProductFilters';
 import ProductForm from '@/components/product/ProductForm';
+import ProductUpdateForm from '@/components/product/ProductUpdateForm';
 import styles from './ProductsManager.module.css';
+import ProductDetailView from './ProductDetailView';
 
 export default function ProductsManager() {
   const [products, setProducts] = useState([]);
@@ -19,6 +21,10 @@ export default function ProductsManager() {
   });
   const [hasMore, setHasMore] = useState(false);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [showUpdateForm, setShowUpdateForm] = useState(false);
+  const [showDetailsForm, setshowDetailsForm] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState(null);
+  const [selectedProductName, setSelectedProductName] = useState('');
 
   // Загрузка товаров
   const loadProducts = async (useFilters = filters) => {
@@ -107,16 +113,48 @@ export default function ProductsManager() {
     loadProducts(newFilters);
   };
 
-  // Обработчик клика по товару
+  // Обработчик клика по товару для просмотра деталей
   const handleProductClick = (product) => {
     console.log('Product clicked:', product);
-    // TODO: Можно сделать редактирование товара по клику
-    alert(`Выбран товар: ${product.name}\nЦена: ${product.price} руб.\nID: ${product.id}`);
+    setSelectedProductId(product.id);
+    setshowDetailsForm(true);
+  };
+
+  // Обработчик редактирования товара
+  const handleProductEdit = (product) => {
+    console.log('Product edit clicked:', product);
+    setSelectedProductId(product.id);
+    setSelectedProductName(product.name);
+    setShowUpdateForm(true);
   };
 
   // Обработчик успешного создания товара
   const handleProductCreated = () => {
     setShowAddForm(false);
+    loadProducts(); // Перезагружаем список товаров
+  };
+
+  // Обработчик успешного обновления товара
+  const handleProductUpdated = () => {
+    setShowUpdateForm(false);
+    setSelectedProductId(null);
+    loadProducts(); // Перезагружаем список товаров
+  };
+
+  // Обработчик отмены редактирования
+  const handleUpdateCancel = () => {
+    setShowUpdateForm(false);
+    setSelectedProductId(null);
+  };
+  // Обработчик отмены редактирования
+  const handleDetailsCancel = () => {
+    setshowDetailsForm(false);
+    setSelectedProductId(null);
+  };
+  // Обработчик удаления товара
+  const handleProductDeleted = () => {
+    setShowUpdateForm(false);
+    setSelectedProductId(null);
     loadProducts(); // Перезагружаем список товаров
   };
 
@@ -179,6 +217,7 @@ export default function ProductsManager() {
               <div className={styles.productsInfo}>
                 <span>Товаров на странице: {products.length}</span>
                 <span>Страница: {filters.page}</span>
+                <span>Всего товаров: {products.length * filters.page}</span>
               </div>
               
               <div className={styles.productsGrid}>
@@ -187,7 +226,9 @@ export default function ProductsManager() {
                     key={product.id}
                     product={product}
                     onClick={handleProductClick}
+                    onEdit={handleProductEdit}
                     size="medium"
+                    showEditButton={true} // Включаем кнопку редактирования в админке
                   />
                 ))}
               </div>
@@ -207,6 +248,7 @@ export default function ProductsManager() {
               
               <div className={styles.pageInfo}>
                 Страница {filters.page}
+                {hasMore && ' • Есть еще товары'}
               </div>
               
               <button 
@@ -228,6 +270,32 @@ export default function ProductsManager() {
             <ProductForm
               onSuccess={handleProductCreated}
               onCancel={() => setShowAddForm(false)}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Модальное окно с формой редактирования товара */}
+      {showUpdateForm && selectedProductId && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <ProductUpdateForm
+              productId={selectedProductId}
+              onSuccess={handleProductUpdated}
+              onCancel={handleUpdateCancel}
+              onDelete={handleProductDeleted}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Модальное окно с формой детального показа товара */}
+      {showDetailsForm && selectedProductId && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <ProductDetailView
+              productId={selectedProductId}
+              onClose={handleDetailsCancel}
             />
           </div>
         </div>

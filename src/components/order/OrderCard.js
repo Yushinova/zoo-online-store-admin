@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { orderService} from '@/api/orderService';
+import { OrderRequest, OrderUpdateRequest } from '@/models/order';
 import styles from './OrderCard.module.css';
 
 const ORDER_STATUSES = [
@@ -30,14 +31,15 @@ export default function OrderCard({ order, onOrderUpdated}) {
   const handleSave = async () => {
     setIsLoading(true);
     try {
-      // Используем orderService для обновления
-      const updatedOrder = await orderService.updateOrderById(order.id, {
-        shippingAddress: editedOrder.shippingAddress,
-        status: editedOrder.status,
-        shippingCost: editedOrder.shippingCost
-      });
+      const orderUp = new OrderUpdateRequest();
+      orderUp.shippingCost = editedOrder.shippingCost;
+      orderUp.status = editedOrder.status;
+      orderUp.shippingAddress = editedOrder.shippingAddress;
+   
+     
+      const updatedOrder = await orderService.updateOrderById(order.id, orderUp);
       
-      // Вызываем callback для обновления родительского компонента
+      //вызываем callback для обновления родительского компонента
       if (onOrderUpdated) {
         onOrderUpdated(updatedOrder);
       }
@@ -61,10 +63,10 @@ export default function OrderCard({ order, onOrderUpdated}) {
   const getStatusColor = (status) => {
     const colors = {
       'Kart': '#ffc107',
-      'Paid': '#17a2b8',
+      'Paid': '#49cc15ff',
       'Processing': '#007bff',
       'Shipped': '#6f42c1',
-      'Delivered': '#28a745',
+      'Delivered': '#606b62ff',
       'Deleted': '#dc3545'
     };
     return colors[status] || '#6c757d';
@@ -95,7 +97,7 @@ export default function OrderCard({ order, onOrderUpdated}) {
 
   return (
     <div className={styles.orderCard}>
-      {/* Заголовок заказа */}
+      {/*заголовок заказа*/}
       <div className={styles.orderHeader}>
         <div className={styles.orderNumber}>
           Заказ #{order.orderNumber}
@@ -108,7 +110,7 @@ export default function OrderCard({ order, onOrderUpdated}) {
         </div>
       </div>
 
-      {/* Информация о пользователе */}
+      {/*информация о пользователе*/}
       <div className={styles.userSection}>
         <h3>Информация о покупателе</h3>
         <div className={styles.userInfo}>
@@ -117,7 +119,7 @@ export default function OrderCard({ order, onOrderUpdated}) {
         </div>
       </div>
 
-      {/* Редактируемые поля */}
+      {/*редактируемые поля*/}
       <div className={styles.editableSection}>
         <div className={styles.field}>
           <label className={styles.label}>Адрес доставки:</label>
@@ -175,10 +177,10 @@ export default function OrderCard({ order, onOrderUpdated}) {
         </div>
       </div>
 
-      {/* Детали заказа */}
+      {/*детали заказа*/}
       <div className={styles.orderDetails}>
         <div className={styles.detailItem}>
-          <strong>Общая сумма:</strong> {formatPrice(order.amount)}
+          <strong>Общая сумма:</strong> <h2 className={styles.itemPrice} >{formatPrice(order.amount)}</h2>
         </div>
         <div className={styles.detailItem}>
           <strong>Дата создания:</strong> {formatDate(order.createdAt)}
@@ -188,7 +190,7 @@ export default function OrderCard({ order, onOrderUpdated}) {
         </div>
       </div>
 
-      {/* Товары в заказе */}
+      {/*товары в заказе*/}
       {order.orderItems && order.orderItems.length > 0 && (
         <div className={styles.itemsSection}>
           <h3>Товары в заказе ({order.orderItems.length})</h3>
@@ -210,7 +212,7 @@ export default function OrderCard({ order, onOrderUpdated}) {
         </div>
       )}
 
-      {/* Кнопки управления */}
+      {/*кнопки управления*/}
       <div className={styles.actions}>
         {isEditing ? (
           <>

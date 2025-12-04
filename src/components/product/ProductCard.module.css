@@ -104,27 +104,90 @@
   letter-spacing: 1px;
 }
 
-/* Контент */
+.editButton {
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid #ddd !important;
+  border-radius: 50% !important;
+  width: 36px !important;
+  height: 36px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  z-index: 100 !important;
+  transition: all 0.2s ease !important;
+  opacity: 0 !important;
+  transform: translateY(-5px) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.card:hover .editButton {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.editButton:hover {
+  background: #fff !important;
+  border-color: #007bff !important;
+  transform: scale(1.1) !important;
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3) !important;
+}
+
+.editIcon {
+  width: 18px !important;
+  height: 18px !important;
+  stroke: #666 !important;
+}
+
+.editButton:hover .editIcon {
+  stroke: #007bff !important;
+}
+
+/* Делаем кнопку всегда видимой в админке */
+.adminView .editButton {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Адаптивность для кнопки редактирования */
+@media (max-width: 768px) {
+  .editButton {
+    opacity: 1 !important; /* Всегда показывать на мобильных */
+    transform: translateY(0) !important;
+    width: 32px !important;
+    height: 32px !important;
+  }
+  
+  .editIcon {
+    width: 16px !important;
+    height: 16px !important;
+  }
+}
+
+/* Остальные существующие стили... */
 .content {
-  padding: 16px;
+  padding: 15px;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  flex-grow: 1;
 }
 
 .name {
   font-size: 16px;
   font-weight: 600;
-  color: #333;
-  margin: 0;
+  margin: 0 0 8px 0;
   line-height: 1.3;
+  color: #333;
+  overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  overflow: hidden;
-  min-height: 42px;
 }
+
 
 .brand {
   font-size: 14px;
@@ -264,4 +327,5 @@
     font-size: 11px;
     padding: 3px 8px;
   }
+  
 }

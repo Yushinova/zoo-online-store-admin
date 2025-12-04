@@ -1,12 +1,16 @@
 'use client';
 import { useState } from 'react';
 import styles from './ProductCard.module.css';
+
 const YANDEX_CLOUD_BASE_URL = process.env.NEXT_PUBLIC_YC_PUBLIC_URL || 'https://storage.yandexcloud.net';
 const YANDEX_BUCKET_NAME = process.env.NEXT_PUBLIC_YC_BUCKET_NAME || 'backet-online-storage';
+
 export default function ProductCard({ 
   product, 
   onClick,
-  size = 'medium' // 'small' | 'medium' | 'large'
+  onEdit, // Новый пропс для редактирования
+  size = 'medium', // 'small' | 'medium' | 'large'
+  showEditButton = false // Новый пропс для показа кнопки редактирования
 }) {
   const [imageError, setImageError] = useState(false);
   
@@ -24,9 +28,21 @@ export default function ProductCard({
 
   const imageName = getImageUrl();
 
-  const handleClick = () => {
+  const handleClick = (e) => {
+    // Проверяем, не кликнули ли по кнопке редактирования
+    if (e.target.closest(`.${styles.editButton}`)) {
+      return;
+    }
+    
     if (onClick && product.isActive) {
       onClick(product);
+    }
+  };
+
+  const handleEditClick = (e) => {
+    e.stopPropagation();
+    if (onEdit) {
+      onEdit(product);
     }
   };
 
@@ -83,6 +99,20 @@ export default function ProductCard({
           onError={handleImageError}
           loading="lazy"
         />
+        
+        {/* Кнопка редактирования */}
+        {showEditButton && onEdit && (
+          <button 
+            className={styles.editButton}
+            onClick={handleEditClick}
+            title="Редактировать товар"
+          >
+            <svg className={styles.editIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+            </svg>
+          </button>
+        )}
+        
         {!product.isActive && (
           <div className={styles.inactiveOverlay}>
             <span>Нет в наличии</span>
@@ -107,7 +137,7 @@ export default function ProductCard({
         {/* Рейтинг */}
         <div className={styles.rating}>
           {renderStars()}
-          <span className={styles.ratingValue}>{product.rating.toFixed(1)}</span>
+          <span className={styles.ratingValue}>{product.rating?.toFixed(1) || '0.0'}</span>
         </div>
 
         {/* Цена */}
@@ -146,6 +176,13 @@ export default function ProductCard({
             {product.petTypes.length > 2 && (
               <span className={styles.moreTag}>+{product.petTypes.length - 2}</span>
             )}
+          </div>
+        )}
+
+        {/* Категория (дополнительно для админки) */}
+        {product.category && (
+          <div className={styles.categoryInfo}>
+            Категория: {product.category.name}
           </div>
         )}
       </div>

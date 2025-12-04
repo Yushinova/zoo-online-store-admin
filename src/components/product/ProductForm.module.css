@@ -304,3 +304,338 @@ button:disabled {
   background: #6c757d;
   opacity: 0.7;
 }
+
+/*Для update form*/
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.productId {
+  background: #f0f0f0;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.loadingContainer .loadingSpinner {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 20px;
+}
+
+.productInfo {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.productInfo h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+}
+
+.imageCount {
+  margin: 10px 0 0 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.leftButtons {
+  display: flex;
+  gap: 10px;
+}
+
+.rightButtons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.deleteButton {
+  padding: 10px 20px;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.deleteButton:hover:not(:disabled) {
+  background: #c82333;
+}
+
+.deleteButton:disabled {
+  background: #e0a0a8;
+  cursor: not-allowed;
+}
+
+.deleteConfirmButton {
+  padding: 10px 20px;
+  background: #ffc107;
+  color: #212529;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+  animation: pulse 1.5s infinite;
+}
+
+.deleteConfirmButton:hover:not(:disabled) {
+  background: #e0a800;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 193, 7, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 193, 7, 0);
+  }
+}
+
+/* Адаптивные стили для кнопок */
+@media (max-width: 768px) {
+  .buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .leftButtons,
+  .rightButtons {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .deleteButton,
+  .deleteConfirmButton {
+    flex: 1;
+  }
+
+  .validationErrors {
+  background: #fff5f5;
+  border: 1px solid #fed7d7;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+
+.validationTitle {
+  color: #c53030;
+  margin: 0 0 10px 0;
+  font-size: 16px;
+}
+
+.validationList {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.validationItem {
+  color: #c53030;
+  margin-bottom: 5px;
+}
+
+.validationItem:last-child {
+  margin-bottom: 0;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.requiredHint {
+  color: #666;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.requiredWarning {
+  color: #c53030;
+  background: #fff5f5;
+  padding: 10px 15px;
+  border-radius: 6px;
+  border: 1px solid #fed7d7;
+  margin: 10px 0 0 0;
+  font-size: 14px;
+}
+
+.petTypesStatus {
+  margin-top: 15px;
+}
+
+.selectedCount {
+  color: #2d3748;
+  font-weight: 500;
+  margin: 10px 0 0 0;
+}
+
+/* Обновляем стили для обязательного выбора */
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s;
+}
+
+.checkboxLabel:hover {
+  background: #edf2f7;
+  border-color: #cbd5e0;
+}
+
+.checkbox:checked + .checkboxText {
+  font-weight: 600;
+  color: #2d3748;
+}
+
+/* Отключаем кнопку сохранения, если не выбран тип животного */
+.submitButton:disabled[title] {
+  position: relative;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.submitButton:disabled[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  white-space: nowrap;
+  z-index: 10;
+  margin-bottom: 10px;
+  pointer-events: none;
+}
+
+.submitButton:disabled[title]:hover::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #333;
+  margin-bottom: -6px;
+  z-index: 10;
+}
+.inputError {
+  border-color: #e53e3e !important;
+  background-color: #fff5f5;
+}
+
+.fieldError {
+  display: block;
+  color: #e53e3e;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.errorHighlight {
+  border-color: #e53e3e;
+  color: #c53030;
+  background-color: #fed7d7;
+}
+
+.imagesPreview {
+  margin-top: 15px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.imagesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.imagePreview {
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  border: 1px solid #dee2e6;
+}
+
+.previewImage {
+  width: 100%;
+  height: 80px;
+  object-fit: cover;
+  display: block;
+}
+
+.imageName {
+  padding: 4px;
+  font-size: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.moreImages {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e9ecef;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #6c757d;
+  font-weight: 500;
+}
+/* Стили для шага с изображениями */
+.imagesStepContainer {
+  padding: 20px;
+}
+
+.imagesInfo {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: #f8f9fa;
+  border-radius: 4px;
+  display: inline-block;
+  font-size: 14px;
+}
+
+.uploadSection {
+  margin: 30px 0;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+}

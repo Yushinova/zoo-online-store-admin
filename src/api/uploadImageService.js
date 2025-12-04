@@ -11,7 +11,7 @@ export class UploadService {
 
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('fileName', fileName); // передаем сгенерированное имя
+      formData.append('fileName', fileName); //передаем сгенерированное имя
 
       const response = await fetch('/api/yandex-upload', {
         method: 'POST',
@@ -40,6 +40,6 @@ export class UploadService {
 
   static async uploadMultipleFiles(files, folder = 'products') {
     const uploadPromises = files.map(file => this.uploadFile(file, folder));
-    return Promise.all(uploadPromises);
+    return Promise.all(uploadPromises);//грузим в фоне
   }
 }

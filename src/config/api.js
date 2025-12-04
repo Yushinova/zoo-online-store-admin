@@ -1,5 +1,7 @@
 export const API_CONFIG = {
   BASE_URL: process.env.NEXT_PUBLIC_API_URL,
+  YC_URL: process.env.NEXT_PUBLIC_YC_PUBLIC_URL,
+  YC_BACKET: process.env.NEXT_PUBLIC_YC_BUCKET_NAME,
   
   ADMIN: {
     LOGIN: '/api/admin/login',

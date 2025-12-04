@@ -8,7 +8,7 @@ export class OrderService {
     this.baseUrl = API_CONFIG.BASE_URL;
   }
 
-  // Получить все заказы с пагинацией
+  //получить все заказы с пагинацией
   async getOrdersSorted(page = 1, pageSize = 2) {
     try {
       const response = await fetch(
@@ -29,12 +29,12 @@ export class OrderService {
 
       const ordersData = await response.json();
       console.log(ordersData);
-      // Преобразуем данные в OrderResponse объекты
+      //преобразуем данные в OrderResponse
       return ordersData.map(orderData => {
         const order = new OrderResponse();
         Object.assign(order, orderData);
         
-        // Обрабатываем вложенные объекты
+        //обрабатываем вложенные объекты
         if (orderData.user) {
           order.user = Object.assign(new UserOrderResponse(), orderData.user);
         }
@@ -42,7 +42,6 @@ export class OrderService {
         if (orderData.orderItems && Array.isArray(orderData.orderItems)) {
           order.orderItems = orderData.orderItems.map(item => ({
             ...item,
-            // Добавляем дополнительные поля если нужно
           }));
         }
         
@@ -54,16 +53,11 @@ export class OrderService {
     }
   }
 
-  // Обновить заказ по ID
+  //обновить заказ по id
   async updateOrderById(orderId, updateData) {
     try {
-      const updateRequest = {
-        shippingAddress: updateData.shippingAddress,
-        status: updateData.status,
-        shippingCost: updateData.shippingCost
-      };
 
-      console.log('🔄 Updating order:', orderId, updateRequest);
+      console.log('🔄 Updating order:', orderId, updateData);
 
       const response = await fetch(
         `${this.baseUrl}/api/order/admin/${orderId}`,
@@ -73,7 +67,7 @@ export class OrderService {
             'Content-Type': 'application/json',
           },
           credentials: 'include',
-          body: JSON.stringify(updateRequest)
+          body: JSON.stringify(updateData)
         }
       );
 
@@ -93,5 +87,4 @@ export class OrderService {
   }
 }
 
-// ⚡ Убедитесь что экспортируете экземпляр
 export const orderService = new OrderService();

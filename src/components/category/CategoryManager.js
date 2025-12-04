@@ -110,7 +110,7 @@ export default function CategoryManager() {
         </div>
       )}
 
-      {/* ФОРМА ДОБАВЛЕНИЯ */}
+      {/*ФОРМА ДОБАВЛЕНИЯ*/}
       {showAddForm && (
         <div className={styles.addFormContainer}>
           <form onSubmit={handleAddCategory} className={styles.addForm}>
@@ -154,7 +154,7 @@ export default function CategoryManager() {
         </div>
       )}
 
-      {/* СПИСОК КАТЕГОРИЙ */}
+      {/*СПИСОК КАТЕГОРИЙ*/}
       {loading ? (
         <div className={styles.loading}>
           <div className={styles.loadingSpinner}></div>

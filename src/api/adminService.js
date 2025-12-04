@@ -120,7 +120,7 @@ export class AdminService {
     this.currentAdmin = null;
 
     try {
-    // 1. Вызываем logout на бэкенде чтобы удалить cookies
+    //вызываем logout на бэкенде чтобы удалить cookies
     await fetch(`${API_CONFIG.BASE_URL}/api/admin/logout`, {
       method: 'POST',
       credentials: 'include'
@@ -128,12 +128,12 @@ export class AdminService {
   } catch (error) {
     console.error('Backend logout error:', error);
   } finally {
-    // 2. Очищаем фронтенд в любом случае
+    //очищаем фронтенд в любом случае
     this.apiKey = null;
     this.currentAdmin = null;
     localStorage.removeItem('adminData');
     
-    // 3. Удаляем cookies на фронтенде (на всякий случай)
+    //удаляем cookies на фронтенде
     document.cookie = 'adminToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
   }
   
@@ -141,5 +141,5 @@ export class AdminService {
 }
 
 export const adminService = new AdminService();
-//загружаем сохраненные данные при старте
+//загружаем сохраненные данные при страте
 adminService.loadFromStorage();

@@ -6,10 +6,10 @@ export class ProductService {
     this.baseUrl = `${API_CONFIG.BASE_URL}/api/product`;
   }
 
-  // GET /api/product - получить все продукты с фильтрами и пагинацией
+  //GET /api/product-получить все продукты с фильтрами и пагинацией
   async getAllWithFilterAndPagination(parameters = new ProductQueryParameters()) {
     try {
-      // Строим query string из параметров
+      //cтроим query string из параметров
       const queryParams = new URLSearchParams();
       
       Object.keys(parameters).forEach(key => {
@@ -50,7 +50,7 @@ export class ProductService {
     }
   }
 
-  // GET /api/product/{id} - получить продукт по ID
+  //GET /api/product/{id} -получить продукт по ID
   async getByIdWithAllInfo(id) {
     try {
       const response = await fetch(`${this.baseUrl}/${id}`, {
@@ -75,7 +75,7 @@ export class ProductService {
     }
   }
 
-  // POST /api/product/admin - создать продукт (требует админской авторизации)
+  //POST /api/product/admin - создать продукт (только для админов)
   async insertProduct(productRequest) {
     try {
       console.log('Creating product:', productRequest);
@@ -113,7 +113,7 @@ export class ProductService {
     }
   }
 
-  // PATCH /api/product/admin/{id} - обновить продукт (требует админской авторизации)
+  //PATCH /api/product/admin/{id} обновить продукт (только для админов)
   async updateById(id, productRequest) {
     try {
       console.log('Updating product:', { id, ...productRequest });
@@ -151,7 +151,7 @@ export class ProductService {
     }
   }
 
-  // DELETE /api/product/admin/{id} - удалить продукт (требует админской авторизации)
+  //DELETE /api/product/admin/{id} -удалить продукт (только для админв)
   async deleteById(id) {
     try {
       console.log('Deleting product with ID:', id);
@@ -184,18 +184,17 @@ export class ProductService {
     }
   }
 
-  // Вспомогательные методы для работы с параметрами запроса
+  //методы для работы с параметрами запроса
   createQueryParameters(params = {}) {
     const queryParams = new ProductQueryParameters();
     return { ...queryParams, ...params };
   }
 
-  // Метод для создания нового ProductRequest с дефолтными значениями
+  //ля создания нового ProductRequest с дефолтными значениями
   createProductRequest(initialData = {}) {
     const request = new ProductRequest();
     return { ...request, ...initialData };
   }
 }
 
-// Создаем экземпляр сервиса
 export const productService = new ProductService();

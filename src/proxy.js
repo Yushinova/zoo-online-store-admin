@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-
+//бывший мидлваре
 export function proxy(request) {
   const adminToken = request.cookies.get('adminToken')?.value;
   

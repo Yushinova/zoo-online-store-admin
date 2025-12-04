@@ -19,7 +19,7 @@
 .orderNumber {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #333;
+  color:#0056b3;
 }
 
 .statusBadge {
@@ -31,15 +31,15 @@
 }
 
 .userSection {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   padding: 15px;
-  background-color: #f8f9fa;
+  background-color: #9ce9f7;
   border-radius: 8px;
 }
 
 .userSection h3 {
   margin: 0 0 10px 0;
-  color: #495057;
+  color: #000000;
   font-size: 1.1rem;
 }
 
@@ -70,7 +70,7 @@
 
 .value {
   padding: 8px 12px;
-  background-color: #f8f9fa;
+  background-color: #9ce9f7;
   border-radius: 4px;
   border: 1px solid #e9ecef;
 }
@@ -148,7 +148,7 @@
 
 .itemPrice {
   font-weight: 600;
-  color: #28a745;
+  color: #2835a7;
 }
 
 .actions {

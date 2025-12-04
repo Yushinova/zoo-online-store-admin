@@ -29,7 +29,6 @@ export class ProductImageService {
       console.log('Response status:', response.status);
 
       if (!response.ok) {
-        // Для ошибок пробуем получить текст или JSON
         const errorText = await response.text();
         console.log('Error response:', errorText);
         
@@ -45,8 +44,6 @@ export class ProductImageService {
         
         throw new Error(errorMessage);
       }
-
-      // Для успешного Ok() без контента - просто проверяем статус
       console.log('Insert successful - empty response');
       return { success: true, message: 'Image added successfully' };
 
@@ -56,7 +53,7 @@ export class ProductImageService {
     }
   }
 
-  // Удаление изображения по имени
+  //удаление изображения по имени
   async deleteByName(name) {
     try {
       console.log('Deleting image with name:', name);
@@ -85,7 +82,7 @@ export class ProductImageService {
         throw new Error(errorMessage);
       }
 
-      // Для успешного Ok() без контента
+      //для успешного Ok() без контента
       console.log('Delete successful - empty response');
       return { success: true, message: 'Image deleted successfully' };
 
@@ -95,7 +92,7 @@ export class ProductImageService {
     }
   }
 
-  // Получение всех изображений (если нужно)
+  //получение всех изображений для тестирования
   async getAll() {
     try {
       const response = await fetch(this.baseUrl, {
@@ -114,7 +111,7 @@ export class ProductImageService {
     }
   }
 
-  // Получение изображения по ID (если нужно)
+  //получение изображения по id
   async getById(id) {
     try {
       const response = await fetch(`${this.baseUrl}/${id}`, {
@@ -134,5 +131,4 @@ export class ProductImageService {
   }
 }
 
-// Создаем экземпляр сервиса
 export const productImageService = new ProductImageService();

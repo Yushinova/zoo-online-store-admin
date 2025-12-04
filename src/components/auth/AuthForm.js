@@ -47,13 +47,13 @@ export default function AuthForm() {
         const adminResponse = await adminService.getAdmin(apiKey);
         setMessage(`Успешный вход! Добро пожаловать, ${adminResponse.name}`);
 
-        //РЕДИРЕКТ НА ГЛАВНУЮ ЧЕРЕЗ 1.5 СЕКУНДЫ
+        //РЕДИРЕКТ НА ГЛАВНУЮ
         setTimeout(() => {
-          router.push('/'); // переход на главную страницу
+          router.push('/');
         }, 1500);
         
       } else {
-        // РЕГИСТРАЦИЯ
+        //РЕГИСТРАЦИЯ
         const adminData = new AdminRequest();
         adminData.name = formData.name;
         adminData.login = formData.login;
@@ -67,9 +67,9 @@ export default function AuthForm() {
         const response = await adminService.getAdmin(apiKey);
         setMessage(`Админ ${response.name} успешно зарегистрирован!`);
         setFormData({ name: '', login: '', password: '' });//очищаем
-        // РЕДИРЕКТ НА ГЛАВНУЮ ЧЕРЕЗ 1.5 СЕКУНДЫ
+        //РЕДИРЕКТ НА ГЛАВНУЮ
         setTimeout(() => {
-          router.push('/'); // переход на главную страницу
+          router.push('/');
         }, 1500);
       }
       
@@ -90,19 +90,19 @@ export default function AuthForm() {
 //переключаем режим
   const switchMode = () => {
     setIsLogin(!isLogin);
-    setError('');//очищение
+    setError('');
     setMessage('');
     setFormData({
-      name: '',//очищение
-      login: '',//
-      password: ''//
+      name: '',
+      login: '',
+      password: ''
     });
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.card}>
-       {/* Заголовок меняется в зависимости от режима */}
+       {/*Заголовок меняется в зависимости от режима*/}
         <div className={styles.header}>
           <h1 className={styles.title}>
             {isLogin ? 'Вход в систему' : 'Регистрация администратора'}
@@ -115,9 +115,9 @@ export default function AuthForm() {
           </p>
         </div>
 
-        {/* Форма */}
+        {/*форма*/}
         <form onSubmit={handleSubmit} className={styles.form}>
-          {/* Имя (только для регистрации) */}
+          {/*иИмя (только для регистрации)*/}
           {!isLogin && (
             <div className={styles.inputGroup}>
               <label htmlFor="name" className={styles.label}>
@@ -136,7 +136,7 @@ export default function AuthForm() {
             </div>
           )}
 
-          {/* Логин */}
+          {/*логин*/}
           <div className={styles.inputGroup}>
             <label htmlFor="login" className={styles.label}>
               Логин
@@ -153,7 +153,7 @@ export default function AuthForm() {
             />
           </div>
 
-          {/* Пароль */}
+          {/*пароль*/}
           <div className={styles.inputGroup}>
             <label htmlFor="password" className={styles.label}>
               Пароль
@@ -170,7 +170,7 @@ export default function AuthForm() {
             />
           </div>
 
-          {/* Кнопка отправки */}
+          {/*кнопка отправки*/}
           <button
             type="submit"
             disabled={loading}
@@ -187,7 +187,7 @@ export default function AuthForm() {
           </button>
         </form>
 
-        {/* Переключатель */}
+        {/*переключатель*/}
         <div className={styles.switch}>
           <span>
             {isLogin ? 'Нет учетной записи?' : 'Уже есть учетная запись?'}
@@ -201,7 +201,7 @@ export default function AuthForm() {
           </button>
         </div>
 
-        {/* Сообщения об ошибках/успехе */}
+        {/*сообщения об ошибке/успехе*/}
         {error && (
           <div className={`${styles.message} ${styles.error}`}>
             <span>❌</span>
@@ -215,7 +215,7 @@ export default function AuthForm() {
           <div className={`${styles.message} ${styles.success}`}>
             <span>✅</span>
             <div>
-              <strong>Успех!</strong> {message}
+              <strong>OK:</strong> {message}
             </div>
           </div>
         )}
