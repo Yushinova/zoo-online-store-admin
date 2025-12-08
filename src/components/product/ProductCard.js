@@ -1,9 +1,10 @@
 'use client';
 import { useState } from 'react';
+import { API_CONFIG } from '@/config/api';
 import styles from './ProductCard.module.css';
 
-const YANDEX_CLOUD_BASE_URL = process.env.NEXT_PUBLIC_YC_PUBLIC_URL || 'https://storage.yandexcloud.net';
-const YANDEX_BUCKET_NAME = process.env.NEXT_PUBLIC_YC_BUCKET_NAME || 'backet-online-storage';
+const YANDEX_CLOUD_BASE_URL = API_CONFIG.YC_URL || 'https://storage.yandexcloud.net';
+const YANDEX_BUCKET_NAME = API_CONFIG.YC_BACKET || 'backet-online-storage';
 
 export default function ProductCard({ 
   product, 
