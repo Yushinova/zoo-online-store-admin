@@ -62,7 +62,7 @@ export default function OrderCard({ order, onOrderUpdated}) {
 
   const getStatusColor = (status) => {
     const colors = {
-      'Kart': '#ffc107',
+      'Pending': '#ffc107',
       'Paid': '#49cc15ff',
       'Processing': '#007bff',
       'Shipped': '#6f42c1',
