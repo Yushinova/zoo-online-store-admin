@@ -23,7 +23,7 @@ export const API_CONFIG = {
     GET_FILTERED: (params) => {
       const queryString = new URLSearchParams();
       
-      // Добавляем только те параметры, которые не null/undefined
+      //добавляем только те параметры, которые не null/undefined
       Object.keys(params).forEach(key => {
         if (params[key] !== null && params[key] !== undefined) {
           queryString.append(key, params[key]);

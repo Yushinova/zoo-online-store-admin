@@ -12,7 +12,7 @@ import { ProductFormHeader } from '@/components/product/ProductFormHeader';
 import styles from './ProductForm.module.css';
 
 export default function ProductForm({ onSuccess, onCancel }) {
-  const [step, setStep] = useState(1); // 1 - форма товара, 2 - загрузка картинок
+  const [step, setStep] = useState(1); //1 - форма товара, 2 - загрузка картинок
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
   const [petTypes, setPetTypes] = useState([]);
@@ -33,7 +33,7 @@ export default function ProductForm({ onSuccess, onCancel }) {
     petTypeIds: []
   });
 
-  // Загрузка категорий и типов животных
+  //загрузка категорий и типов животных
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -53,7 +53,7 @@ export default function ProductForm({ onSuccess, onCancel }) {
     loadData();
   }, []);
 
-  // Очищаем ошибки валидации при изменении данных
+  //очистить ошибки валидации при изменении данных
   useEffect(() => {
     if (validationErrors.length > 0) {
       setValidationErrors([]);
@@ -92,9 +92,9 @@ export default function ProductForm({ onSuccess, onCancel }) {
     if (!formData.price || Number(formData.price) <= 0) errors.push('Цена должна быть больше 0');
     if (!formData.categoryId) errors.push('Выберите категорию');
     
-    // Проверка: хотя бы один тип животного должен быть выбран
+    //хотя бы один тип животного должен быть выбран
     if (formData.petTypeIds.length === 0) {
-      errors.push('Выберите хотя бы один тип животного');
+      errors.push('Выберите тип животного');
     }
     
     return errors;
@@ -126,7 +126,7 @@ export default function ProductForm({ onSuccess, onCancel }) {
       request.categoryId = Number(formData.categoryId);
       request.petTypeIds = formData.petTypeIds.map(id => Number(id));
 
-      console.log('Creating product with data:', request);
+      console.log('Creating product with data:', request);//для отладки
       const createdProduct = await productService.insertProduct(request);
       
       console.log('Product created:', createdProduct);
@@ -177,7 +177,7 @@ export default function ProductForm({ onSuccess, onCancel }) {
     }
   };
 
-  // Шаг 1: Форма создания товара
+  //шаг 1: создание товара
   if (step === 1) {
     return (
       <div className={styles.container}>
@@ -213,7 +213,7 @@ export default function ProductForm({ onSuccess, onCancel }) {
     );
   }
 
-  // Шаг 2: Загрузка картинок
+  //шаг 2: загрузка картинок
   return (
     <div className={styles.container}>
       <ProductImagesStep

@@ -16,7 +16,7 @@ export function ProductImagesStep({
   const isCreateMode = mode === 'create';
   const displayName = isCreateMode ? createdProductName : productName;
 
-  // Обработчик изменения изображений
+  //обработчик изменения изображений
   const handleImagesChange = (updatedImages) => {
     console.log('ProductImagesStep: images changed', updatedImages.length);
     
@@ -25,7 +25,7 @@ export function ProductImagesStep({
     }
   };
 
-  // Обработчик удаления изображения
+  //обработчик удаления изображения
   const handleImageDelete = () => {
     console.log('ProductImagesStep: image deleted');
     
@@ -66,7 +66,7 @@ export function ProductImagesStep({
         </div>
       )}
 
-      {/* Компонент загрузки картинок */}
+      {/*компонент загрузки картинок */}
       <div className={styles.uploadSection}>
         <ImageUploader 
           productId={productId}
@@ -76,7 +76,6 @@ export function ProductImagesStep({
         />
       </div>
 
-      {/* Кнопки */}
       <div className={styles.buttons}>
         <button
           type="button"

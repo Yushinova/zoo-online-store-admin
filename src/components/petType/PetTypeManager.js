@@ -14,7 +14,7 @@ export default function PetTypeManager() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [petTypeToDelete, setPetTypeToDelete] = useState(null);
 
-  // Загрузка типов животных
+  //загрузка типов животных
   const loadPetTypes = async () => {
     try {
       setLoading(true);
@@ -33,21 +33,20 @@ export default function PetTypeManager() {
     loadPetTypes();
   }, []);
 
-  // Обработчик клика по карточке
+  //обработчик клика по карточке
   const handlePetTypeClick = (petType) => {
     if (mode === 'view') {
-      // В режиме просмотра можно что-то делать, например показать детали
       console.log('Selected pet type:', petType);
     }
   };
 
-  // Редактирование типа животного
+  //редактирование типа животного
   const handleEdit = (petType) => {
     setSelectedPetType(petType);
     setMode('redact');
   };
 
-  // Удаление типа животного
+  //удаление типа животного
   const handleDelete = (petType) => {
     setPetTypeToDelete(petType);
     setShowDeleteConfirm(true);
@@ -58,7 +57,7 @@ export default function PetTypeManager() {
 
     try {
       await petTypeService.deleteById(petTypeToDelete.id);
-      await loadPetTypes(); // Перезагружаем список
+      await loadPetTypes(); //перезагружаем список
       alert(`Тип питомца "${petTypeToDelete.name}" успешно удален!`);
     } catch (err) {
       console.error('Error deleting pet type:', err);
@@ -69,26 +68,26 @@ export default function PetTypeManager() {
     }
   };
 
-  // Создание нового типа животного
+  //создание нового типа животного
   const handleAddNew = () => {
     setSelectedPetType(null);
     setMode('create');
   };
 
-  // Отмена редактирования/создания
+  //отмена редактирования/создания
   const handleCancel = () => {
     setMode('view');
     setSelectedPetType(null);
   };
 
-  // Успешное сохранение формы
+  //сохранение формы
   const handleFormSuccess = () => {
     setMode('view');
     setSelectedPetType(null);
-    loadPetTypes(); // Перезагружаем список
+    loadPetTypes(); //перезагружаем список
   };
 
-  // Если режим редактирования или создания - показываем форму
+  //если режим редактирования или создания - показываем форму
   if (mode === 'redact' || mode === 'create') {
     return (
       <div className={styles.container}>
@@ -101,7 +100,7 @@ export default function PetTypeManager() {
     );
   }
 
-  // Режим просмотра
+  //режим просмотра
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -129,7 +128,7 @@ export default function PetTypeManager() {
         </div>
       ) : (
         <div className={styles.petTypesGrid}>
-          {/* Карточки существующих типов животных */}
+          {/*карточки существующих типов животных*/}
           {petTypes.map(petType => (
             <div key={petType.id} className={styles.petTypeItem}>
               <PetTypeCard
@@ -164,7 +163,7 @@ export default function PetTypeManager() {
             </div>
           ))}
 
-          {/* Карточка "Добавить" всегда последняя */}
+          {/*Добавить*/}
           <div className={styles.petTypeItem}>
             <div 
               className={`${styles.addCard} ${styles.card}`}
@@ -181,7 +180,7 @@ export default function PetTypeManager() {
         </div>
       )}
 
-      {/* Модальное окно подтверждения удаления */}
+      {/*модальное окно подтверждения удаления*/}
       {showDeleteConfirm && (
         <div className={styles.modalOverlay}>
           <div className={styles.modal}>

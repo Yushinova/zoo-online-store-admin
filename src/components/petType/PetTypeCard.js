@@ -17,7 +17,7 @@ export default function PetTypeCard({
   if (!petType) return null;
 
   useEffect(() => {
-    console.log('🔍 PetTypeCard received:', petType);
+    console.log('PetTypeCard received:', petType);
   }, [petType]);
 
   const getImageUrl = () => {
@@ -38,7 +38,7 @@ export default function PetTypeCard({
   };
 
   const handleImageError = (e) => {
-    console.error('❌ Image load failed:', imageUrl);
+    console.error('Image load failed:', imageUrl);
     setImageError(true);
   };
 
@@ -54,7 +54,7 @@ export default function PetTypeCard({
             alt={petType.name}
             className={styles.image}
             onError={handleImageError}
-            onLoad={() => console.log('✅ Image loaded:', petType.name)}
+            onLoad={() => console.log('Image loaded:', petType.name)}
           />
         ) : null}
         <div className={styles.placeholder} style={{ display: imageUrl && !imageError ? 'none' : 'flex' }}>

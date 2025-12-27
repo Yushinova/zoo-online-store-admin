@@ -16,7 +16,7 @@ export default function ProductFilters({
   const [loading, setLoading] = useState(true);
   const [localFilters, setLocalFilters] = useState(filters);
 
-  // Загрузка категорий и типов животных
+  //загрузка категорий и типов животных
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -37,7 +37,7 @@ export default function ProductFilters({
     loadData();
   }, []);
 
-  // Обновление локальных фильтров при изменении пропсов
+  //обновление фильтров при изменении пропсов
   useEffect(() => {
     setLocalFilters(filters);
   }, [filters]);
@@ -62,7 +62,7 @@ export default function ProductFilters({
 
   const handleReset = () => {
     const resetFilters = new ProductQueryParameters();
-    // Сохраняем пагинацию при сбросе
+    //сохраняем пагинацию при сбросе
     resetFilters.page = localFilters.page;
     resetFilters.pageSize = localFilters.pageSize;
     
@@ -113,7 +113,7 @@ export default function ProductFilters({
         </div>
       </div>
 
-      {/* Верхняя строка - основные фильтры */}
+      {/*основные фильтры*/}
       <div className={styles.topRow}>
         <div className={styles.filterGroup}>
           <label className={styles.label}>Название товара</label>
@@ -161,7 +161,7 @@ export default function ProductFilters({
         </div>
       </div>
 
-      {/* Нижняя строка - дополнительные фильтры */}
+      {/*дополнительные фильтры*/}
       <div className={styles.bottomRow}>
         <div className={styles.filterGroup}>
           <label className={styles.label}>Рейтинг от</label>
@@ -233,7 +233,6 @@ export default function ProductFilters({
         </div>
       </div>
 
-      {/* Мобильная версия - компактные кнопки */}
       <div className={styles.mobileActions}>
         <button 
           onClick={handleReset}

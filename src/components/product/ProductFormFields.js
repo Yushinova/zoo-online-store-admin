@@ -13,15 +13,7 @@ export function ProductFormFields({
   onPetTypeToggle
 }) {
   
-  // Добавим отладочную информацию
-  console.log('=== ProductFormFields Debug ===');
-  console.log('formData:', formData);
-  console.log('petTypes:', petTypes);
-  console.log('formData.petTypeIds:', formData?.petTypeIds);
-  console.log('Type of formData.petTypeIds:', typeof formData?.petTypeIds);
-  console.log('Is Array?', Array.isArray(formData?.petTypeIds));
-  
-  // Валидационные ошибки для конкретных полей
+  //ошибки для полей
   const getFieldError = (fieldName) => {
     if (!validationErrors || validationErrors.length === 0) return null;
     
@@ -36,7 +28,7 @@ export function ProductFormFields({
     return validationErrors.find(error => error === fieldErrors[fieldName]);
   };
 
-  // Безопасная проверка, выбран ли petType
+  //выбран ли petType
   const isPetTypeSelected = (petTypeId) => {
     console.log(`Checking if petTypeId ${petTypeId} is selected`);
     
@@ -45,7 +37,7 @@ export function ProductFormFields({
       return false;
     }
     
-    // Убедимся, что это массив
+    //проверим, что это массив
     const petTypeIds = Array.isArray(formData.petTypeIds) ? formData.petTypeIds : [];
     console.log('Current petTypeIds:', petTypeIds);
     
@@ -57,7 +49,6 @@ export function ProductFormFields({
 
   return (
     <>
-      {/* Основная информация */}
       <div className={styles.formSection}>
         <h3 className={styles.sectionTitle}>Основная информация</h3>
         
@@ -109,7 +100,6 @@ export function ProductFormFields({
         </div>
       </div>
 
-      {/* Цены и количество */}
       <div className={styles.formSection}>
         <h3 className={styles.sectionTitle}>Цены и количество</h3>
         
@@ -167,7 +157,6 @@ export function ProductFormFields({
         </div>
       </div>
 
-      {/* Категория */}
       <div className={styles.formSection}>
         <h3 className={styles.sectionTitle}>Категория</h3>
         
@@ -199,7 +188,6 @@ export function ProductFormFields({
         </div>
       </div>
 
-      {/* Типы животных */}
       <div className={styles.formSection}>
         <div className={styles.sectionHeader}>
           <h3 className={styles.sectionTitle}>Типы животных *</h3>
@@ -216,7 +204,6 @@ export function ProductFormFields({
               {petTypes.map((petType, index) => {
                 console.log(`Rendering petType ${index}:`, petType);
                 
-                // Безопасное получение данных petType
                 const petTypeId = petType?.id;
                 const petTypeName = petType?.name || `Тип ${index + 1}`;
                 
@@ -258,7 +245,6 @@ export function ProductFormFields({
         )}
       </div>
 
-      {/* Статусы */}
       <div className={styles.formSection}>
         <h3 className={styles.sectionTitle}>Статусы</h3>
         <div className={styles.checkboxGroup}>

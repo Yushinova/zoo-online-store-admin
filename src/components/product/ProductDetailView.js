@@ -85,14 +85,14 @@ export default function ProductDetailView({ productId, onClose }) {
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        {/* Заголовок */}
+
         <div className={styles.header}>
           <h2>Информация о товаре</h2>
           <button className={styles.closeBtn} onClick={onClose}>×</button>
         </div>
 
         <div className={styles.content}>
-          {/* Левая колонка - изображения */}
+          {/*колонка - изображения*/}
           <div className={styles.leftColumn}>
             <div className={styles.imageContainer}>
               {product.productImages && product.productImages.length > 0 ? (
@@ -135,10 +135,10 @@ export default function ProductDetailView({ productId, onClose }) {
             </div>
           </div>
 
-          {/* Правая колонка - информация */}
+          {/*колонка - информация */}
           <div className={styles.rightColumn}>
             <div className={styles.productInfo}>
-              {/* Название и статусы */}
+
               <div className={styles.titleSection}>
                 <h1 className={styles.productName}>{product.name}</h1>
                 <div className={styles.statusIcons}>
@@ -151,15 +151,13 @@ export default function ProductDetailView({ productId, onClose }) {
                 </div>
               </div>
 
-              {/* Основные характеристики */}
+              {/*характеристики*/}
               <div className={styles.specs}>
-                {/* Цена */}
                 <div className={styles.specRow}>
                   <span className={styles.specLabel}>Цена продажи:</span>
                   <span className={styles.price}>{formatPrice(product.price)}</span>
                 </div>
 
-                {/* Себестоимость (если есть) */}
                 {product.costPrice > 0 && (
                   <div className={styles.specRow}>
                     <span className={styles.specLabel}>Себестоимость:</span>
@@ -167,7 +165,6 @@ export default function ProductDetailView({ productId, onClose }) {
                   </div>
                 )}
 
-                {/* Количество */}
                 <div className={styles.specRow}>
                   <span className={styles.specLabel}>Количество:</span>
                   <span className={`${styles.quantity} ${product.quantity === 0 ? styles.outOfStock : ''}`}>
@@ -176,7 +173,6 @@ export default function ProductDetailView({ productId, onClose }) {
                   </span>
                 </div>
 
-                {/* Бренд (если есть) */}
                 {product.brand && (
                   <div className={styles.specRow}>
                     <span className={styles.specLabel}>Бренд:</span>
@@ -184,7 +180,6 @@ export default function ProductDetailView({ productId, onClose }) {
                   </div>
                 )}
 
-                {/* Рейтинг (если есть) */}
                 {product.rating > 0 && (
                   <div className={styles.specRow}>
                     <span className={styles.specLabel}>Рейтинг:</span>
@@ -192,7 +187,7 @@ export default function ProductDetailView({ productId, onClose }) {
                   </div>
                 )}
 
-                {/* ID информация */}
+                {/* ID для разработки*/}
                 <div className={styles.specRow}>
                   <span className={styles.specLabel}>ID товара:</span>
                   <span className={styles.id}>{product.id}</span>
@@ -204,7 +199,6 @@ export default function ProductDetailView({ productId, onClose }) {
                 </div>
               </div>
 
-              {/* Описание (если есть) */}
               {product.description && (
                 <div className={styles.descriptionSection}>
                   <h3 className={styles.sectionTitle}>Описание</h3>
@@ -214,7 +208,6 @@ export default function ProductDetailView({ productId, onClose }) {
                 </div>
               )}
 
-              {/* Типы животных (если есть) */}
               {product.petTypes && product.petTypes.length > 0 && (
                 <div className={styles.petTypesSection}>
                   <h3 className={styles.sectionTitle}>Для животных</h3>
@@ -228,7 +221,6 @@ export default function ProductDetailView({ productId, onClose }) {
                 </div>
               )}
 
-              {/* Информация об изображениях */}
               {product.productImages && product.productImages.length > 0 && (
                 <div className={styles.imagesInfo}>
                   <h3 className={styles.sectionTitle}>Изображения</h3>
@@ -246,7 +238,6 @@ export default function ProductDetailView({ productId, onClose }) {
           </div>
         </div>
 
-        {/* Футер */}
         <div className={styles.footer}>
           <button onClick={onClose} className={styles.closeButton}>
             Закрыть

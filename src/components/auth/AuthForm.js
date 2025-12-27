@@ -1,10 +1,10 @@
 'use client';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation'; //для редиректа
-import { adminService } from '@/api/adminService';//сервис для входа(регистрация и логинирование)
-import { authService } from '@/api/authService';//сервис для получения JWT токена
-import { AdminRequest } from '@/models/admin';//класс для запроса регистрации
-import { AdminLoginRequest } from '@/models/admin';//класс для логина
+import { useRouter } from 'next/navigation';
+import { adminService } from '@/api/adminService';
+import { authService } from '@/api/authService';//для получения JWT токена
+import { AdminRequest } from '@/models/admin';
+import { AdminLoginRequest } from '@/models/admin';
 import styles from './AuthForm.module.css';
 
 export default function AuthForm() {
@@ -14,22 +14,22 @@ export default function AuthForm() {
   const [isLogin, setIsLogin] = useState(true);
    //состояние для данных формы
   const [formData, setFormData] = useState({
-    name: '',//только для регистрации
-    login: '',//для обоих
-    password: ''//для обоих
+    name: '',
+    login: '',
+    password: ''
   });
-  //загрузка
+ 
   const [loading, setLoading] = useState(false);
   //если усспешно
   const [message, setMessage] = useState('');
-  //ошибки
+
   const [error, setError] = useState('');
 //отправка формы
   const handleSubmit = async (e) => {
     e.preventDefault();//отменяем стандартную отправку формы
-    setLoading(true);//включаем загрузку
-    setError('');//очищаем ошибки
-    setMessage('');//сообщения
+    setLoading(true);
+    setError('');
+    setMessage('');
 
     try {
       if (isLogin) {
@@ -66,7 +66,7 @@ export default function AuthForm() {
         const token = await authService.getTokenByApiKey(apiKey);
         const response = await adminService.getAdmin(apiKey);
         setMessage(`Админ ${response.name} успешно зарегистрирован!`);
-        setFormData({ name: '', login: '', password: '' });//очищаем
+        setFormData({ name: '', login: '', password: '' });
         //РЕДИРЕКТ НА ГЛАВНУЮ
         setTimeout(() => {
           router.push('/');
@@ -102,7 +102,7 @@ export default function AuthForm() {
   return (
     <div className={styles.container}>
       <div className={styles.card}>
-       {/*Заголовок меняется в зависимости от режима*/}
+       {/*заголовок меняется в зависимости от режима*/}
         <div className={styles.header}>
           <h1 className={styles.title}>
             {isLogin ? 'Вход в систему' : 'Регистрация администратора'}
@@ -115,9 +115,8 @@ export default function AuthForm() {
           </p>
         </div>
 
-        {/*форма*/}
         <form onSubmit={handleSubmit} className={styles.form}>
-          {/*иИмя (только для регистрации)*/}
+          {/*имя только для регистрации*/}
           {!isLogin && (
             <div className={styles.inputGroup}>
               <label htmlFor="name" className={styles.label}>
@@ -136,7 +135,6 @@ export default function AuthForm() {
             </div>
           )}
 
-          {/*логин*/}
           <div className={styles.inputGroup}>
             <label htmlFor="login" className={styles.label}>
               Логин
@@ -153,7 +151,6 @@ export default function AuthForm() {
             />
           </div>
 
-          {/*пароль*/}
           <div className={styles.inputGroup}>
             <label htmlFor="password" className={styles.label}>
               Пароль
@@ -170,7 +167,6 @@ export default function AuthForm() {
             />
           </div>
 
-          {/*кнопка отправки*/}
           <button
             type="submit"
             disabled={loading}

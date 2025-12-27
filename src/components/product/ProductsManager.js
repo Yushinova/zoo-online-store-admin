@@ -26,7 +26,7 @@ export default function ProductsManager() {
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [selectedProductName, setSelectedProductName] = useState('');
 
-  // Загрузка товаров
+  //загрузка товаров
   const loadProducts = async (useFilters = filters) => {
     try {
       setLoading(true);
@@ -37,7 +37,7 @@ export default function ProductsManager() {
       
       setProducts(productsData || []);
       
-      // Предполагаем, что если сервер вернул меньше товаров чем pageSize, значит больше нет
+      //если сервер вернул меньше товаров чем pageSize, значит больше нет
       const returnedCount = productsData?.length || 0;
       setHasMore(returnedCount >= useFilters.pageSize);
       
@@ -55,12 +55,12 @@ export default function ProductsManager() {
     loadProducts();
   }, []);
 
-  // Обработчики фильтров
+  //обработчики фильтров
   const handleFiltersChange = (newFilters) => {
     console.log('Filters changed:', newFilters);
     setFilters(prev => ({
       ...newFilters,
-      page: 1, // Сбрасываем на первую страницу
+      page: 1, //сбрасываем на первую страницу
       pageSize: prev.pageSize
     }));
   };
@@ -85,7 +85,7 @@ export default function ProductsManager() {
     await loadProducts(defaultFilters);
   };
 
-  // Пагинация
+  //пагинация
   const handleNextPage = () => {
     const nextPage = filters.page + 1;
     const newFilters = { ...filters, page: nextPage };
@@ -102,25 +102,14 @@ export default function ProductsManager() {
     }
   };
 
-  const handlePageSizeChange = (newSize) => {
-    const pageSize = Number(newSize);
-    const newFilters = { 
-      ...filters, 
-      pageSize: pageSize,
-      page: 1 // Сбрасываем на первую страницу
-    };
-    setFilters(newFilters);
-    loadProducts(newFilters);
-  };
-
-  // Обработчик клика по товару для просмотра деталей
+  //клик по товару для просмотра деталей
   const handleProductClick = (product) => {
     console.log('Product clicked:', product);
     setSelectedProductId(product.id);
     setshowDetailsForm(true);
   };
 
-  // Обработчик редактирования товара
+  //редактирование товара
   const handleProductEdit = (product) => {
     console.log('Product edit clicked:', product);
     setSelectedProductId(product.id);
@@ -128,39 +117,38 @@ export default function ProductsManager() {
     setShowUpdateForm(true);
   };
 
-  // Обработчик успешного создания товара
+  //обработчик успешного создания товара
   const handleProductCreated = () => {
     setShowAddForm(false);
-    loadProducts(); // Перезагружаем список товаров
+    loadProducts(); //перезагружаем список товаров
   };
 
-  // Обработчик успешного обновления товара
+  //обработчик успешного обновления товара
   const handleProductUpdated = () => {
     setShowUpdateForm(false);
     setSelectedProductId(null);
-    loadProducts(); // Перезагружаем список товаров
+    loadProducts();
   };
 
-  // Обработчик отмены редактирования
+  //обработчик отмены редактирования
   const handleUpdateCancel = () => {
     setShowUpdateForm(false);
     setSelectedProductId(null);
   };
-  // Обработчик отмены редактирования
+
   const handleDetailsCancel = () => {
     setshowDetailsForm(false);
     setSelectedProductId(null);
   };
-  // Обработчик удаления товара
+
   const handleProductDeleted = () => {
     setShowUpdateForm(false);
     setSelectedProductId(null);
-    loadProducts(); // Перезагружаем список товаров
+    loadProducts();
   };
 
   return (
     <div className={styles.container}>
-      {/* Шапка с кнопкой добавления */}
       <div className={styles.header}>
         <h2 className={styles.title}>Управление товарами</h2>
         <button 
@@ -174,7 +162,6 @@ export default function ProductsManager() {
         </button>
       </div>
 
-      {/* Фильтры */}
       <ProductFilters
         filters={filters}
         onFiltersChange={handleFiltersChange}
@@ -182,14 +169,12 @@ export default function ProductsManager() {
         onResetFilters={handleResetFilters}
       />
 
-      {/* Сообщение об ошибке */}
       {error && (
         <div className={styles.error}>
           {error}
         </div>
       )}
 
-      {/* Загрузка */}
       {loading ? (
         <div className={styles.loading}>
           <div className={styles.loadingSpinner}></div>
@@ -197,7 +182,7 @@ export default function ProductsManager() {
         </div>
       ) : (
         <>
-          {/* Список товаров */}
+          {/*список товаров*/}
           {products.length === 0 ? (
             <div className={styles.emptyState}>
               <svg className={styles.emptyIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -228,14 +213,13 @@ export default function ProductsManager() {
                     onClick={handleProductClick}
                     onEdit={handleProductEdit}
                     size="medium"
-                    showEditButton={true} // Включаем кнопку редактирования в админке
+                    showEditButton={true} //включаем кнопку редактирования
                   />
                 ))}
               </div>
             </>
           )}
 
-          {/* Простая пагинация */}
           {products.length > 0 && (
             <div className={styles.simplePagination}>
               <button 
@@ -263,7 +247,7 @@ export default function ProductsManager() {
         </>
       )}
 
-      {/* Модальное окно с формой добавления товара */}
+      {/*модалка добавления товара*/}
       {showAddForm && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>
@@ -275,7 +259,7 @@ export default function ProductsManager() {
         </div>
       )}
 
-      {/* Модальное окно с формой редактирования товара */}
+      {/*модала редактирования товара*/}
       {showUpdateForm && selectedProductId && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>
@@ -289,7 +273,7 @@ export default function ProductsManager() {
         </div>
       )}
 
-      {/* Модальное окно с формой детального показа товара */}
+      {/*модалка для детального показа товара*/}
       {showDetailsForm && selectedProductId && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>

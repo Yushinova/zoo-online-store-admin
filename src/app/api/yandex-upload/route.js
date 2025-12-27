@@ -23,7 +23,7 @@ export async function POST(request) {
       );
     }
 
-    // Используем переданное имя или генерируем
+    //Используем переданное имя или генерируем
     const fileName = customFileName || `products/${Date.now()}-${file.name}`;
     const buffer = await file.arrayBuffer();
 
@@ -53,7 +53,6 @@ export async function POST(request) {
   }
 }
 
-// Добавим метод для удаления
 export async function DELETE(request) {
   try {
     const { searchParams } = new URL(request.url);

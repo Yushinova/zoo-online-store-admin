@@ -9,15 +9,15 @@ const YANDEX_BUCKET_NAME = API_CONFIG.YC_BACKET || 'backet-online-storage';
 export default function ProductCard({ 
   product, 
   onClick,
-  onEdit, // Новый пропс для редактирования
+  onEdit, //пропс для редактирования
   size = 'medium', // 'small' | 'medium' | 'large'
-  showEditButton = false // Новый пропс для показа кнопки редактирования
+  showEditButton = false //пропс для показа кнопки редактирования
 }) {
   const [imageError, setImageError] = useState(false);
   
   if (!product) return null;
 
-  // Получаем первую картинку или заглушку
+  //получаем первую картинку или заглушку
   const getImageUrl = () => {
     if (!product.productImages || product.productImages.length === 0) {
       return '/notimage.jpeg';
@@ -30,7 +30,7 @@ export default function ProductCard({
   const imageName = getImageUrl();
 
   const handleClick = (e) => {
-    // Проверяем, не кликнули ли по кнопке редактирования
+    //проверяем, не кликнули ли по кнопке редактирования
     if (e.target.closest(`.${styles.editButton}`)) {
       return;
     }
@@ -60,7 +60,7 @@ export default function ProductCard({
     }).format(price);
   };
 
-  // Генерация звезд для рейтинга
+  //генерация звезд для рейтинга
   const renderStars = () => {
     const stars = [];
     const fullStars = Math.floor(product.rating);
@@ -84,14 +84,13 @@ export default function ProductCard({
       className={`${styles.card} ${styles[size]} ${!product.isActive ? styles.inactive : ''}`}
       onClick={handleClick}
     >
-      {/* Бейдж акции */}
       {product.isPromotion && (
         <div className={styles.promotionBadge}>
           Акция
         </div>
       )}
 
-      {/* Контейнер изображения */}
+      {/*контейнер изображения*/}
       <div className={styles.imageContainer}>
         <img 
           src={imageError ? '/notimage.jpeg' : imageName}
@@ -101,7 +100,6 @@ export default function ProductCard({
           loading="lazy"
         />
         
-        {/* Кнопка редактирования */}
         {showEditButton && onEdit && (
           <button 
             className={styles.editButton}
@@ -121,27 +119,22 @@ export default function ProductCard({
         )}
       </div>
 
-      {/* Контент карточки */}
       <div className={styles.content}>
-        {/* Название */}
         <h3 className={styles.name} title={product.name}>
           {product.name}
         </h3>
 
-        {/* Бренд */}
         {product.brand && (
           <div className={styles.brand}>
             {product.brand}
           </div>
         )}
 
-        {/* Рейтинг */}
         <div className={styles.rating}>
           {renderStars()}
           <span className={styles.ratingValue}>{product.rating?.toFixed(1) || '0.0'}</span>
         </div>
 
-        {/* Цена */}
         <div className={styles.priceSection}>
           <div className={styles.price}>
             {formatPrice(product.price)}
@@ -153,7 +146,6 @@ export default function ProductCard({
           )}
         </div>
 
-        {/* Индикатор количества */}
         {product.quantity <= 10 && product.quantity > 0 && (
           <div className={styles.quantityWarning}>
             Осталось: {product.quantity} шт.
@@ -166,7 +158,7 @@ export default function ProductCard({
           </div>
         )}
 
-        {/* Типы животных (только тэги) */}
+        {/*типы животных (только тэги)*/}
         {product.petTypes && product.petTypes.length > 0 && (
           <div className={styles.petTypes}>
             {product.petTypes.slice(0, 2).map((petType, index) => (
@@ -180,7 +172,6 @@ export default function ProductCard({
           </div>
         )}
 
-        {/* Категория (дополнительно для админки) */}
         {product.category && (
           <div className={styles.categoryInfo}>
             Категория: {product.category.name}

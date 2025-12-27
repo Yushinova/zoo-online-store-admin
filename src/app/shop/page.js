@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { adminService } from '@/api/adminService';
-import PetTypeManager from '@/components/petType/PetTypeManager'; // Импортируем наш компонент
+import PetTypeManager from '@/components/petType/PetTypeManager';
 import CategoryManager from '@/components/category/CategoryManager';
 import styles from './Shop.module.css';
 import ProductsManager from '@/components/product/ProductsManager';
@@ -11,7 +11,7 @@ export default function ShopPage() {
   const router = useRouter();
   const [admin, setAdmin] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [activeSection, setActiveSection] = useState('petTypes'); // 'petTypes' | 'products' | 'categories'
+  const [activeSection, setActiveSection] = useState('petTypes');
 
   useEffect(() => {
     if (!adminService.currentAdmin && !adminService.token) {
@@ -35,7 +35,7 @@ export default function ShopPage() {
     return <div className={styles.loading}>Загрузка...</div>;
   }
 
-  // Рендер контента в зависимости от активной секции
+  //рендер контента в зависимости от активной секции
   const renderContent = () => {
   switch (activeSection) {
     case 'petTypes':
@@ -66,7 +66,7 @@ export default function ShopPage() {
         </div>
       </header>
       
-      {/* Навигация по разделам */}
+      {/*навигация*/}
       <nav className={styles.navigation}>
         <button 
           className={`${styles.navButton} ${activeSection === 'petTypes' ? styles.active : ''}`}

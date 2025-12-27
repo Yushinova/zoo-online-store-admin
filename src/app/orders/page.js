@@ -1,8 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { adminService } from '@/api/adminService'; // ⚡ экземпляр
-import { orderService } from '@/api/orderService'; // ⚡ экземпляр
+import { adminService } from '@/api/adminService';
+import { orderService } from '@/api/orderService';
 import OrderCard from '@/components/order/OrderCard';
 import styles from './Orders.module.css';
 
@@ -21,10 +21,9 @@ export default function OrdersPage() {
     });
 
     if (!adminService.currentAdmin) {
-      console.log('❌ No admin, redirecting to auth');
       router.push('/auth');
     } else {
-      console.log('✅ Admin found:', adminService.currentAdmin);
+      console.log('admin found:', adminService.currentAdmin);
       setAdmin(adminService.currentAdmin);
       loadOrders();
     }
@@ -33,16 +32,13 @@ export default function OrdersPage() {
   const loadOrders = async () => {
     try {
       setLoading(true);
-      console.log('📦 Loading orders...');
-      
-      // ⚡ Используем экземпляр orderService, а не класс
       const ordersData = await orderService.getOrdersSorted(currentPage, pageSize);
-      console.log("✅ Orders loaded:", ordersData);
+      console.log("orders loaded:", ordersData);
       
       setOrders(ordersData);
     } catch (error) {
-      console.error('❌ Error loading orders:', error);
-      alert(`Ошибка при загрузке заказов: ${error.message}`);
+      console.error('error loading orders:', error);
+      alert(`ошибка при загрузке заказов: ${error.message}`);
     } finally {
       setLoading(false);
     }

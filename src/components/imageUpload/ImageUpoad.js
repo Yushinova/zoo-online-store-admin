@@ -39,13 +39,13 @@ export default function ImageUploader({
   const saveImageToDatabase = async (uploadedImage, originalFile) => {
     try {
       const request = new ProductImageRequest();
-      request.imageName = uploadedImage.fileName;//ВАЖНО именно этот сервис возвращает публичный URL
+      request.imageName = uploadedImage.fileName;//возвращает публичный URL
       request.altText = originalFile.name;
       request.productId = productId;
 
       console.log('Saving to database:', request);
       
-      // сохраняем в базу данных и получаем ответ или ошибку
+      //сохраняем в базу данных и получаем ответ или ошибку
       const savedImage = await productImageService.insert(request);
       console.log('Successfully saved to database:', savedImage);
       
@@ -175,7 +175,7 @@ export default function ImageUploader({
       }
 
       //обновляем состояние
-      const newImages = images.filter((_, i) => i !== index);
+      const newImages = images.filter((_, i) => i !== index);//_неиспользуемый параметр
       setImages(newImages);
       
       if (onImagesChange) {
@@ -218,13 +218,11 @@ export default function ImageUploader({
         {images.length > 0 ? 'Управление изображениями' : 'Загрузка изображений'}
       </h3>
       
-      {/* Информация о товаре */}
       <div className={styles.productInfo}>
         <span>ID товара: <strong>{productId}</strong></span>
         <span>Изображений: <strong>{images.length}/{MAX_FILES}</strong></span>
       </div>
 
-      {/* Кнопка загрузки */}
       <div className={styles.uploadSection}>
         <input
           ref={fileInputRef}
@@ -258,7 +256,7 @@ export default function ImageUploader({
         </p>
       </div>
 
-      {/* Сетка превью */}
+      {/*сетка превью*/}
       {images.length > 0 && (
         <div className={styles.previews}>
           <h4 className={styles.previewsTitle}>
@@ -315,7 +313,7 @@ export default function ImageUploader({
         </div>
       )}
 
-      {/* Сообщение, если нет изображений */}
+      {/*сообщение если нет изображений*/}
       {images.length === 0 && (
         <div className={styles.emptyState}>
           <div className={styles.emptyIcon}>📷</div>

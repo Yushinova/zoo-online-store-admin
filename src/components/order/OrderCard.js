@@ -5,12 +5,12 @@ import { OrderRequest, OrderUpdateRequest } from '@/models/order';
 import styles from './OrderCard.module.css';
 
 const ORDER_STATUSES = [
-  { value: 'Kart', label: 'В корзине' },
-  { value: 'Paid', label: 'Оплачен' },
-  { value: 'Processing', label: 'В обработке' },
-  { value: 'Shipped', label: 'Отправлен' },
-  { value: 'Delivered', label: 'Доставлен' },
-  { value: 'Deleted', label: 'Удален' }
+  { value: 'pending', label: 'В процессе оплаты' },
+  { value: 'paid', label: 'Оплачен' },
+  { value: 'processing', label: 'В обработке' },
+  { value: 'shipped', label: 'Отправлен' },
+  { value: 'delivered', label: 'Доставлен' },
+  { value: 'deleted', label: 'Удален' }
 ];
 
 export default function OrderCard({ order, onOrderUpdated}) {
@@ -62,12 +62,12 @@ export default function OrderCard({ order, onOrderUpdated}) {
 
   const getStatusColor = (status) => {
     const colors = {
-      'Pending': '#ffc107',
-      'Paid': '#49cc15ff',
-      'Processing': '#007bff',
-      'Shipped': '#6f42c1',
-      'Delivered': '#606b62ff',
-      'Deleted': '#dc3545'
+      'pending': '#ffc107',
+      'paid': '#49cc15ff',
+      'processing': '#007bff',
+      'shipped': '#6f42c1',
+      'delivered': '#606b62ff',
+      'deleted': '#dc3545'
     };
     return colors[status] || '#6c757d';
   };

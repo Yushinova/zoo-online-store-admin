@@ -5,7 +5,7 @@ import { categoryService } from '@/api/categoryService';
 import { UploadService } from '@/api/uploadImageService';
 import styles from './PetTypeForm.module.css';
 
-// Используем переменные из .env
+//используем переменные из .env переделать на конфиг
 const YANDEX_CLOUD_BASE_URL = process.env.NEXT_PUBLIC_YC_PUBLIC_URL || 'https://storage.yandexcloud.net';
 const YANDEX_BUCKET_NAME = process.env.NEXT_PUBLIC_YC_BUCKET_NAME || 'backet-online-storage';
 
@@ -30,20 +30,20 @@ export default function PetTypeForm({
   useEffect(() => {
     loadCategories();
     if (isEditMode && petType) {
-      // Заполняем форму данными для редактирования
+      //заполняем форму данными для редактирования
       setFormData({
         name: petType.name || '',
         imageName: petType.imageName || ''
       });
       
-      // Устанавливаем выбранные категории
+      //выбранные категории
       if (petType.categories) {
         setSelectedCategories(petType.categories.map(cat => cat.id));
       }
       
-      // Устанавливаем превью изображения если есть
+      //превью изображения если есть
       if (petType.imageName) {
-        // Формируем полный URL к изображению в Yandex Cloud
+        //полный URL к изображению в Yandex Cloud
         const fullImageUrl = `${YANDEX_CLOUD_BASE_URL}/${YANDEX_BUCKET_NAME}/${petType.imageName}`;
         console.log('Setting image preview URL:', fullImageUrl);
         setImagePreview(fullImageUrl);
@@ -83,7 +83,7 @@ export default function PetTypeForm({
 
       setImageFile(file);
       
-      // Создаем превью из выбранного файла
+      //превью из выбранного файла
       const reader = new FileReader();
       reader.onload = (e) => {
         setImagePreview(e.target.result);
@@ -113,7 +113,7 @@ export default function PetTypeForm({
     try {
       let imageFileName = formData.imageName;
 
-      // Если выбрано новое изображение, загружаем его
+      //выбрано новое изображение, загружаем его
       if (imageFile) {
         console.log('Загружаем новое изображение...');
         const uploadResults = await UploadService.uploadMultipleFiles([imageFile]);
@@ -123,12 +123,12 @@ export default function PetTypeForm({
       }
 
       if (isEditMode) {
-        // РЕДАКТИРОВАНИЕ - изображение не обязательно
+        //РЕДАКТИРОВАНИЕ - изображение
         console.log('Редактируем Pet Type...');
         const updateRequest = {
           id: petType.id,
           name: formData.name,
-          imageName: imageFileName, // Может быть пустым если нет изображения
+          imageName: imageFileName, //может быть пустым если нет изображения
           CategoriesIds: selectedCategories
         };
 
@@ -138,26 +138,23 @@ export default function PetTypeForm({
 
         alert(`Тип питомца "${updatedPetType.name}" успешно обновлен!`);
       } else {
-        // СОЗДАНИЕ - изображение обязательно
+        //СОЗДАНИЕ - изображение
         if (!imageFile) {
           alert('Пожалуйста, выберите изображение');
           setLoading(false);
           return;
         }
 
-        console.log('Создаем новый Pet Type...');
         const petTypeRequest = {
           name: formData.name,
           imageName: imageFileName
         };
 
-        console.log('Создаем Pet Type с данными:', petTypeRequest);
         const createdPetType = await petTypeService.insert(petTypeRequest);
         console.log('Pet Type создан:', createdPetType);
 
-        // Обновляем категории если есть выбранные
+        //обновляем категории
         if (selectedCategories.length > 0) {
-          console.log('Обновляем связи с категориями:', selectedCategories);
           const updateRequest = {
             id: createdPetType.id,
             name: createdPetType.name,
@@ -172,7 +169,7 @@ export default function PetTypeForm({
         alert(`Тип питомца "${createdPetType.name}" успешно создан!`);
       }
 
-      // Сбрасываем форму
+      //сбрасываем форму
       if (!isEditMode) {
         setFormData({ name: '', imageName: '' });
         setSelectedCategories([]);
@@ -203,7 +200,7 @@ export default function PetTypeForm({
     document.getElementById('imageInput').click();
   };
 
-  // Функция для получения URL превью
+  //для получения URL превью
   const getPreviewUrl = () => {
     if (imagePreview) {
       return imagePreview;
@@ -223,7 +220,7 @@ export default function PetTypeForm({
       </h2>
 
       <form onSubmit={handleSubmit} className={styles.form}>
-        {/* Название */}
+        {/*название*/}
         <div className={styles.formGroup}>
           <label className={styles.label}>
             Название типа питомца *
@@ -239,14 +236,14 @@ export default function PetTypeForm({
           />
         </div>
 
-        {/* Загрузка изображения */}
+        {/*загрузка изображения*/}
         <div className={styles.formGroup}>
           <label className={styles.label}>
             Изображение {!isEditMode && '*'}
           </label>
           
           <div className={styles.imageUploadSection}>
-            {/* Превью изображения - показываем только если есть изображение */}
+            {/*превью изображения - показываем только если есть изображение*/}
             {previewUrl && (
               <div className={styles.imagePreview}>
                 <img 
@@ -255,7 +252,7 @@ export default function PetTypeForm({
                   className={styles.previewImage}
                   onError={(e) => {
                     console.log('Image not available:', previewUrl);
-                    // Просто скрываем изображение если не загрузилось, без ошибки
+                    //скрываем изображение если не загрузилось, без ошибки
                     e.target.style.display = 'none';
                   }}
                 />
@@ -264,7 +261,7 @@ export default function PetTypeForm({
                   onClick={() => {
                     setImageFile(null);
                     setImagePreview('');
-                    // При редактировании очищаем imageName
+                    //при редактировании очищаем imageName
                     if (isEditMode) {
                       setFormData(prev => ({ ...prev, imageName: '' }));
                     }
@@ -276,7 +273,6 @@ export default function PetTypeForm({
               </div>
             )}
 
-            {/* Кнопка выбора файла */}
             <div className={styles.uploadButtonContainer}>
               <button
                 type="button"
@@ -304,10 +300,10 @@ export default function PetTypeForm({
           </div>
         </div>
 
-        {/* Выбор категорий */}
+        {/*выбор категорий*/}
         <div className={styles.formGroup}>
           <label className={styles.label}>
-            Категории (опционально)
+            Категории
           </label>
           
           <div className={styles.categoriesContainer}>
@@ -333,7 +329,6 @@ export default function PetTypeForm({
           )}
         </div>
 
-        {/* Кнопки */}
         <div className={styles.buttonsContainer}>
           {onCancel && (
             <button

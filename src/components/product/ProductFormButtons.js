@@ -5,8 +5,8 @@ export function ProductFormButtons({
   mode = 'create',
   loading,
   validationErrors = [],
-  formData = {}, // Добавляем значение по умолчанию
-  categories = [], // Добавляем значение по умолчанию
+  formData = {}, //значение по умолчанию
+  categories = [], //значение по умолчанию
   onCancel,
   onClear,
   onDelete,
@@ -22,21 +22,19 @@ export function ProductFormButtons({
   console.log('Type of formData?.petTypeIds:', typeof formData?.petTypeIds);
   console.log('Is Array?', Array.isArray(formData?.petTypeIds));
   
-  // Безопасная проверка возможности отправки
   const canSubmit = () => {
     if (loading) return false;
     
-    // Проверяем categories
+    //categories
     const categoriesArray = Array.isArray(categories) ? categories : [];
     if (categoriesArray.length === 0) {
       console.log('Cannot submit: categories is empty');
       return false;
     }
     
-    // Проверяем petTypeIds
+    //petTypeIds
     const petTypeIds = formData?.petTypeIds;
     if (!petTypeIds || !Array.isArray(petTypeIds)) {
-      console.log('Cannot submit: petTypeIds is not an array', petTypeIds);
       return false;
     }
     
@@ -55,7 +53,7 @@ export function ProductFormButtons({
     
     const petTypeIds = formData?.petTypeIds;
     if (!petTypeIds || !Array.isArray(petTypeIds) || petTypeIds.length === 0) {
-      return 'Выберите хотя бы один тип животного';
+      return 'Выберите тип животного';
     }
     
     return '';
