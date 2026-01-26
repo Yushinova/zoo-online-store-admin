@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { adminService } from '@/api/adminService';
-import { authService } from '@/api/authService';//для получения JWT токена
+import { authService } from '@/api/authService';
 import { AdminRequest } from '@/models/admin';
 import { AdminLoginRequest } from '@/models/admin';
 import styles from './AuthForm.module.css';

@@ -3,7 +3,6 @@ export class AuthService {
   constructor() {
     this.token = null;
   }
-
   async getTokenByApiKey(apiKey) {
     try {
 
@@ -21,7 +20,6 @@ export class AuthService {
         body: JSON.stringify(requestBody)
       }
     );
-
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
@@ -35,7 +33,6 @@ export class AuthService {
       throw error;
     }
   }
-
   logout() {
     this.token = null;
     //localStorage.removeItem('adminToken');

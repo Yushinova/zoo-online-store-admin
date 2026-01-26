@@ -87,7 +87,7 @@ export default function OrderCard({ order, onOrderUpdated}) {
       minute: '2-digit'
     });
   };
-
+ const totalWithShipping = order.amount + order.shippingCost;
   const formatPrice = (price) => {
     return new Intl.NumberFormat('ru-RU', {
       style: 'currency',
@@ -164,10 +164,9 @@ export default function OrderCard({ order, onOrderUpdated}) {
             <input
               type="number"
               value={editedOrder.shippingCost}
-              onChange={(e) => handleChange('shippingCost', parseFloat(e.target.value) || 0)}
+              onChange={(e) => handleChange('shippingCost', Math.round(Number(e.target.value)) || 0)}
               className={styles.input}
               min="0"
-              step="0.01"
             />
           ) : (
             <span className={styles.value}>
@@ -180,7 +179,8 @@ export default function OrderCard({ order, onOrderUpdated}) {
       {/*детали заказа*/}
       <div className={styles.orderDetails}>
         <div className={styles.detailItem}>
-          <strong>Общая сумма:</strong> <h2 className={styles.itemPrice} >{formatPrice(order.amount)}</h2>
+          <strong>Сумма товаров:</strong> <h2 className={styles.itemPrice} >{formatPrice(order.amount)}</h2>
+          <strong>Общая сумма:</strong> <h2 className={styles.itemPrice} >{totalWithShipping}</h2>
         </div>
         <div className={styles.detailItem}>
           <strong>Дата создания:</strong> {formatDate(order.createdAt)}

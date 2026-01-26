@@ -5,8 +5,7 @@ export class ProductService {
   constructor() {
     this.baseUrl = `${API_CONFIG.BASE_URL}/api/product`;
   }
-
-  //GET /api/product-получить все продукты с фильтрами и пагинацией
+  
   async getAllWithFilterAndPagination(parameters = new ProductQueryParameters()) {
     try {
       //cтроим query string из параметров

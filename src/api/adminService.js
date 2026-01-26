@@ -5,16 +5,13 @@ export class AdminService {
     this.apiKey = null;
     this.currentAdmin = null;
   }
-
   setApiKey(apiKey) {
     this.apiKey = apiKey;
   }
-
   setCurrentAdmin(admin) {
     this.currentAdmin = admin;
     localStorage.setItem('adminData', JSON.stringify(admin));
   }
-
   async register(adminData) {
     try {
       const response = await fetch(
@@ -28,22 +25,18 @@ export class AdminService {
           credentials: 'include'
         }
       );
-
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
       }
-
       const apiKey = await response.text();
       this.apiKey = apiKey;
-    
       return apiKey;
     } catch (error) {
       console.error('Error registering admin:', error);
       throw error;
     }
   }
-
   async login(loginData) {
     try {
       const response = await fetch(
@@ -64,6 +57,7 @@ export class AdminService {
       }
 
       const apiKey = await response.text();
+      //console.log('apiAdmin: '+ apiKey);
       this.setApiKey(apiKey);
       
       return apiKey;

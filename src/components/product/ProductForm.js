@@ -74,7 +74,14 @@ export default function ProductForm({ onSuccess, onCancel }) {
       [name]: value === '' ? '' : Number(value)
     }));
   };
-
+const formatPrice = (price) => {
+    return new Intl.NumberFormat('ru-RU', {
+      style: 'currency',
+      currency: 'RUB',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(price);
+  };
   const handlePetTypeToggle = (petTypeId) => {
     setFormData(prev => {
       const newIds = prev.petTypeIds.includes(petTypeId)
